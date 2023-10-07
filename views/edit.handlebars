@@ -1,0 +1,22 @@
+ {{#if loggedIn}}
+ <div class="card m-auto">
+        <div class="card-body">
+          <h5 class="card-title">Edit Post</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{id}}</h6>
+          <form class="form signup-form">
+            {{#if title}}
+            <div class="form-group">
+              <label for="post-title">Title</label>
+              <input class="form-input" type="text" id="post-title" value= "{{title}}" />
+            </div>
+            {{/if}}
+            <div class="form-group">
+              <label for="post-content">Content</label>
+              <textarea class="form-input" type="text" id="content" >{{content}}</textarea>
+            </div>
+            <button class="btn btn-secondary edit" id = "update">Update </button>
+            <button class="btn btn-secondary edit" id= "delete">Delete </button>
+        </div>
+      </div>
+{{/if}}
+<script src="/scripts/edit.js"></script>

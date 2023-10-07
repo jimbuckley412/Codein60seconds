@@ -1,0 +1,21 @@
+{{#if loggedIn}}
+<div class="card">
+    <div class="card-body">
+        <p>
+        <h3 class="card-title"> Hello {{username}}! </h3>
+        </p>
+        {{#if comments}}
+        <p> <em>Here are all of your comments:</em></p>
+        {{#each comments as |comment|}}
+        {{>comment-partials}}
+        <a href="/api/dashboard/comments/{{id}}/edit">Edit Your Comment</a>
+        {{/each}}
+        {{else}}
+        <p>
+            <em>No comments added so far!</em>
+        </p>
+        {{/if}}
+    </div>
+</div>
+{{>continue-voyage-partials}}
+{{/if}}
