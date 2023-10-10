@@ -1,4 +1,4 @@
-<div class="card-group">
+<div class="card-group" style="position: absolute; top: 20vh; left: 25vw;">
     <form class="form login-form">
         <label for='state'>Choose a State to Explore its Natural Resources</label>
         {{#unless state}}
@@ -8,26 +8,47 @@
         {{/unless}}
         <button class="btn btn-secondary" type="submit">Start your Voyage</button>
     </form>
-    {{#each imageData as |image|}}
-    {{>image-details}}
-    {{/each}}
+    <div class="dropdown" style="position: relative; top:10vh; left: 20vw;">
+        <h5 style="position: absolute; left: -20vw;"><label for="activitiesBtn">Or, search for parks according to what you want to do: </label></h5>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
+            Select an Activity
+        </button>
+       
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {{#each activities as |act|}}
+            <button id={{act.id}} class="dropdown-item" onclick="getParksByActivity(event)">{{act.name}}</button>
+            {{/each}}
+        </div>
+    </div>
 </div>
-{{#if stateParks }}
-<div class="dropdown">
+ <!--<div class="card-group" style="position: relative; top:2.5vh; ">
+        {{#each imageData as |image|}}
+        {{>image-details}}
+        {{/each}}
+    </div>-->
+{{#if stateParks}}
+<div class="dropdown" style="position: absolute; top: 30vh; left: 45vw;">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
         {{state}} Parks
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {{#each stateParks as |park|}}
-        <button id={{park.parkCode}} class="dropdown-item">{{park.fullName}}</button>
+        <button id={{park.parkCode}} class="dropdown-item" onclick="getParkInfo(event)">{{park.fullName}}</button>
         {{/each}}
     </div>
 </div>
-<div class="container" id="container1" style="width: 50vw;">
-</div>
-<div class="container" id="container2" style="width: 50vw;">
-</div>
-
-<script src="/scripts/search-parks.js"></script>
+{{#if thingsToDo}}
+{{>things-modal-partials}}
 {{/if}}
+<div class="container" id="container1" style="width: 30vw;">
+</div>
+<div class="container" id="container2" style="width: 30vw;">
+</div>
+<script src="/scripts/search-parks.js"></script>
+<script src="/scripts/search-thingstodo.js"> </script>
+{{/if}}
+{{#if actParks}}
+{{>activities-modal-partials}}
+{{/if}}
+<script src="/scripts/select-activity.js"></script>
 <script src="/scripts/selectState.js"></script>

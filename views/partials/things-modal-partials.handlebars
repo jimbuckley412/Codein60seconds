@@ -1,0 +1,33 @@
+<div class="modal"  style ="background-color: transparent; display: block; width: 35vw; position: absolute; left:32.5vw; top:45vh;" tabindex="-1" role="dialog" id = "{{id}}">
+  <div class="modal-dialog"  role="document">
+    <div class="modal-content" style ="background-color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Things To Do at <strong><em>{{selectedPark}}</em></strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick = "closeThingsToDo()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{#each thingsToDo as |thing|}}
+        <h5><a href = "{{thing.url}}" target = "_blank">{{thing.title}}</a></h5>
+        <p>{{thing.shortDescription}}</p>
+        <figure>
+            <figcaption>{{thing.images.[0].caption}}</figcaption>
+            <img src="{{thing.images.[0].url}}" style= "max-height: 20vh;">
+            </figure>
+            <h5>Seasons in which the Activity is Performed: </h5>
+             <ul>
+            {{#each thing.season as |sea| }}
+               <li>{{sea}}</li>
+            {{/each}}
+             </ul>
+            <p><span><strong>Time of Day: {{thing.TimeOfDay}}</strong></span><br/>
+            <span><strong>Duration: {{thing.Duration}}</strong></span></p>
+        {{/each}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick = "closeThingsToDo()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
