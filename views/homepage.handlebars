@@ -1,7 +1,33 @@
 <div class="card-group">
-  <div class="row row-cols-1 row-cols-md-3 g-3">
+    <form class="form login-form">
+        <label for='state'>Choose a State to Explore its Natural Resources</label>
+        {{#unless state}}
+        <input type='text' name='state' id='state' placeholder='Enter a State'>
+        {{else}}
+        <input type='text' name='state' id='state' placeholder={{state}}>
+        {{/unless}}
+        <button class="btn btn-secondary" type="submit">Start your Voyage</button>
+    </form>
     {{#each imageData as |image|}}
     {{>image-details}}
     {{/each}}
-  </div>
 </div>
+{{#if stateParks }}
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+        {{state}} Parks
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {{#each stateParks as |park|}}
+        <button id={{park.parkCode}} class="dropdown-item">{{park.fullName}}</button>
+        {{/each}}
+    </div>
+</div>
+<div class="container" id="container1" style="width: 50vw;">
+</div>
+<div class="container" id="container2" style="width: 50vw;">
+</div>
+
+<script src="/scripts/search-parks.js"></script>
+{{/if}}
+<script src="/scripts/selectState.js"></script>
