@@ -1,7 +1,70 @@
-<div class="card-group">
-  <div class="row row-cols-1 row-cols-md-3 g-3">
-    {{#each imageData as |image|}}
-    {{>image-details}}
-    {{/each}}
-  </div>
+<div class="card-group" style="position: absolute; top: 20vh; left: 25vw;">
+    <form class="form login-form">
+        <label for='state' style="color: gray;">Choose a State to Explore its Natural Resources</label>
+        {{#unless state}}
+        <input type='text' name='state' id='state' placeholder='Enter a State'>
+        {{else}}
+        <input type='text' name='state' id='state' placeholder={{state}}>
+        {{/unless}}
+        <button class="btn btn-secondary" type="submit">Start your Voyage</button>
+    </form>
+    <div class="dropdown" style="position: relative; top:2.5vh; left: 25vw;">
+        <h5 style="position: absolute; left: -20vw; color: darkgray;"><label for="activitiesBtn">Or, search for parks according to what you want to do: </label></h5>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
+            Select an Activity
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {{#each activities as |act|}}
+            <button id={{act.id}} class="dropdown-item" onclick="getParksByActivity(event)">{{act.name}}</button>
+            {{/each}}
+        </div>
+    </div>
 </div>
+<div class="dropdown" style="position: relative; top: 0vh; left: 42.5vw;">
+        <h5 style="position: absolute; left: -20vw; color: lightgray;"><label for="activitiesBtn">Or, search for parks according to topics of interest: </label></h5>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
+            Select a Topic
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {{#each topics as |topic|}}
+            <button id={{topic.id}} class="dropdown-item" onclick="getParksByTopic(event)">{{topic.name}}</button>
+            {{/each}}
+        </div>
+    </div>
+</div>
+{{#unless stateParks}}
+ <div class="card-group" style="position: relative; top:10vh; ">
+        {{#each imageData as |image|}}
+        {{>image-details}}
+        {{/each}}
+    </div>
+{{/unless}}
+{{#if stateParks}}
+<div class="dropdown" style="position: absolute; top: 21vh; left: 77.5vw; max-width: 10vw;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+        {{state}} Parks
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {{#each stateParks as |park|}}
+        <button id={{park.parkCode}} class="dropdown-item" onclick="getParkInfo(event)">{{park.fullName}}</button>
+        {{/each}}
+    </div>
+</div>
+{{#if thingsToDo}}
+{{>things-modal-partials}}
+{{/if}}
+<div class="container" id="container1" style="width: 30vw;">
+</div>
+<div class="container" id="container2" style="width: 30vw;">
+</div>
+<script src="/scripts/search-parks.js"></script>
+<script src="/scripts/search-thingstodo.js"> </script>
+{{/if}}
+{{#if actParks}}
+{{>select-modal-partials}}
+{{/if}}
+{{#if topicParks}}
+{{>select-modal-partials}}
+{{/if}}
+<script src="/scripts/select-modal.js"></script>
+<script src="/scripts/selectState.js"></script>

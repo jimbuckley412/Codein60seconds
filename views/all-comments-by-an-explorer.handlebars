@@ -1,0 +1,19 @@
+{{#if loggedIn}}
+<div class="card">
+    <div class="card-body">
+        <p>
+        <h3 class="card-title"> Here are all of the comments by {{explorer}}:</h3>
+        </p>
+        {{#if comments}}
+        {{#each comments as |comment|}}
+        {{>comment-partials}}
+        {{/each}}
+        {{else}}
+         <p>
+            <em>No comments added by {{explorer}} so far!</em>
+        </p>
+        {{/if}}
+    </div>
+</div>
+{{>continue-voyage-partials}}
+{{/if}}

@@ -8,11 +8,11 @@ const imageData = [
     file_path: '/images/img2.jpg',
   },
   {
-    name: 'Canoying',
+    name: 'Canyoning',
     file_path: '/images/img3.jpg',
   },
   {
-    name: 'Activities',
+    name: 'Biking',
     file_path: '/images/img4.jpg',
   },
 ];

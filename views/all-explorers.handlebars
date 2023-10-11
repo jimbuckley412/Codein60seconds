@@ -1,0 +1,24 @@
+{{#if loggedIn}}
+<div class="card">
+    <div class="card-body">
+        <p>
+        <h3 class="card-title"> Hello {{username}}!</h3>
+        <em>Here are all of your fellow explorers. Click their names to see
+            their posts:</em>
+        </p>
+        {{#each allExplorers as |explorer|}}
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-subtitle">Explorer #{{explorer.id}}: {{explorer.username}} </h2>
+                <a href="/api/explorers/search/{{explorer.id}}/posts">See the posts by {{explorer.username}}</a><br />
+                <a href="/api/explorers/search/{{explorer.id}}/comments">See the comments by{{explorer.username}}</a><br />
+                <a href="/api/parks/explorers/{{explorer.id}}/favorites">See the favorite parks of  {{explorer.username}}</a><br />
+                <a href="/api/parks/explorers/{{explorer.id}}/visited">See the parks visited by {{explorer.username}}</a><br />
+                <a href="/api/parks/explorers/{{explorer.id}}/to_visit">See the parks that {{explorer.username}} wants to visit</a><br />
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{/if}}
+{{>continue-voyage-partials}}
