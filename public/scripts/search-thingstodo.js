@@ -23,24 +23,5 @@ const getThingsToDo = async () => {
 };
 
 
-const closeThingsToDo = async () => {
-  document.querySelector('.modal').style.display = 'none';
-
-  const clearThingsToDo = true;
-
-  const response = await fetch('/', {
-    method: 'POST',
-    body: JSON.stringify({ clearThingsToDo }),
-    headers:{
-      'Content-Type': 'application/json'
-    }
-  });
-
-  if(response.ok){
-    location.reload(true);
-  } else {
-    alert(response.statusText);
-  };
-};
 
 

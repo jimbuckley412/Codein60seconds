@@ -1,30 +1,35 @@
 const router = require('express').Router();
-const { apiKey, npsEndpoint, npsThingsToDoEndpoint, npsActivitiesEndpoint } = require('../public/nps-api-info/npsData');
-const activities = require('../public/nps-api-info/nps-activities');
+
+const { apiKey, npsEndpoint, npsThingsToDoEndpoint, npsActivitiesEndpoint, npsTopicsEndpoint } = require('../public/nps-api-info/npsData');
+
 const imageData = require('../seeds/imageData');
+const activities = require('../public/nps-api-info/nps-activities');
 const topics = require('../public/nps-api-info/nps-topics');
 
-let stateParks = [];
+
 let state;
-let thingsToDo = [];
 let selectedPark;
-let selectedActivity;
+let stateParks = [];
+
 let actId;
+let selectedActivity;
 let actParks = [];
+
+let topicId;
+let selectedTopic;
+let topicParks = [];
+
+let thingsToDo = [];
 
 //Displays the homepage
 router.get('/', async (req, res) => {
-        if(!stateParks.length && !actParks.length){
-        res.render('homepage', { imageData, activities, background: imageData[0].file_path, stylesheet: "/css/style.css" });
-        } else if(stateParks.length && !(thingsToDo.length || actParks.length) ){
-        res.render('homepage', { stateParks, activities, state, background: imageData[0].file_path, stylesheet: "/css/style.css" });
-        } else if (stateParks.length && thingsToDo.length){
-        res.render('homepage', { thingsToDo, activities, selectedPark, stateParks, state, background: imageData[0].file_path, stylesheet: "/css/style.css" });
-        } else if(stateParks.length && actParks.length){
-        res.render('homepage', {activities, selectedActivity, actId, actParks, selectedPark, stateParks, state, background: imageData[0].file_path, stylesheet: "/css/style.css" });
-        } else {
-            res.render('homepage', {activities, selectedActivity, actId, actParks, background: imageData[0].file_path, stylesheet: "/css/style.css" });
-        }
+  
+    res.render('homepage', {imageData, activities, topics, 
+                 state, stateParks, selectedPark, 
+                 actId, selectedActivity, actParks,
+                 topicId, selectedTopic, topicParks, 
+                 thingsToDo,  
+                 background: imageData[0].file_path, stylesheet: "/css/style.css"});
 });
 
 router.post('/', async (req, res) => {
@@ -112,8 +117,39 @@ router.post('/', async (req, res) => {
             return res.status(201).json({ stateParks });
         }).catch((err) => console.error(err));
     }
-    if(req.body.clearActParks){
+
+    if(req.body.topicId){
+
+        topicId = req.body.topicId;
+        selectedTopic = req.body.topicName;
+
+        await fetch(npsTopicsEndpoint + '?id=' + req.body.topicId + '&api_key=' + apiKey)
+        .then((response) => {
+            if (!response.ok) {
+                return res.json({ message: response.statusText });
+            }
+            return response.json();
+        }).then((topicParksData) => {
+             topicParks = [];
+            for (let i = 0; i < topicParksData.data[0].parks.length; i++) {
+                const { states, parkCode, designation, fullName, url } = topicParksData.data[0].parks[i];
+                const park = {
+                    states,
+                    parkCode,
+                    designation,
+                    fullName,
+                    url
+                };
+                topicParks.push(park);
+            };
+            return res.status(201).json({ stateParks });
+        }).catch((err) => console.error(err));
+    }
+
+    if(req.body.clearModalData){
         actParks= [];
+        topicParks= [];
+        thingsToDo= [];
     }
 });
 

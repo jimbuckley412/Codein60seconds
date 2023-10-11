@@ -8,12 +8,11 @@
         {{/unless}}
         <button class="btn btn-secondary" type="submit">Start your Voyage</button>
     </form>
-    <div class="dropdown" style="position: relative; top:10vh; left: 20vw;">
+    <div class="dropdown" style="position: relative; top:2.5vh; left: 25vw;">
         <h5 style="position: absolute; left: -20vw;"><label for="activitiesBtn">Or, search for parks according to what you want to do: </label></h5>
         <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
             Select an Activity
         </button>
-       
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {{#each activities as |act|}}
             <button id={{act.id}} class="dropdown-item" onclick="getParksByActivity(event)">{{act.name}}</button>
@@ -21,13 +20,27 @@
         </div>
     </div>
 </div>
- <!--<div class="card-group" style="position: relative; top:2.5vh; ">
+<div class="dropdown" style="position: relative; top: 0vh; left: 42.5vw;">
+        <h5 style="position: absolute; left: -20vw;"><label for="activitiesBtn">Or, search for parks according to topics of interest: </label></h5>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
+            Select a Topic
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {{#each topics as |topic|}}
+            <button id={{topic.id}} class="dropdown-item" onclick="getParksByTopic(event)">{{topic.name}}</button>
+            {{/each}}
+        </div>
+    </div>
+</div>
+{{#unless stateParks}}
+ <div class="card-group" style="position: relative; top:10vh; ">
         {{#each imageData as |image|}}
         {{>image-details}}
         {{/each}}
-    </div>-->
+    </div>
+{{/unless}}
 {{#if stateParks}}
-<div class="dropdown" style="position: absolute; top: 30vh; left: 45vw;">
+<div class="dropdown" style="position: absolute; top: 21vh; left: 77.5vw;">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
         {{state}} Parks
     </button>
@@ -48,7 +61,10 @@
 <script src="/scripts/search-thingstodo.js"> </script>
 {{/if}}
 {{#if actParks}}
-{{>activities-modal-partials}}
+{{>select-modal-partials}}
 {{/if}}
-<script src="/scripts/select-activity.js"></script>
+{{#if topicParks}}
+{{>select-modal-partials}}
+{{/if}}
+<script src="/scripts/select-modal.js"></script>
 <script src="/scripts/selectState.js"></script>
