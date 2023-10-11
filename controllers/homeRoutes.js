@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const { Explorer } = require('../models');
 const { apiKey, npsEndpoint, npsThingsToDoEndpoint, npsActivitiesEndpoint, npsTopicsEndpoint } = require('../public/nps-api-info/npsData');
 
 const imageData = require('../seeds/imageData');
@@ -23,12 +23,17 @@ let thingsToDo = [];
 
 //Displays the homepage
 router.get('/', async (req, res) => {
-  
+   
+    const explorerData  = await Explorer.findByPk(req.session.userId);
+    const username = explorerData.username;
+    console.log(username);
     res.render('homepage', {imageData, activities, topics, 
                  state, stateParks, selectedPark, 
                  actId, selectedActivity, actParks,
                  topicId, selectedTopic, topicParks, 
-                 thingsToDo,  
+                 thingsToDo, 
+                 loggedIn: req.session.loggedIn,
+                 username,
                  background: imageData[0].file_path, stylesheet: "/css/style.css"});
 });
 
