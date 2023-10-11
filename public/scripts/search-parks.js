@@ -49,16 +49,29 @@ const miniImageEl = (url, altText) => {
 const deleteCard = (event) => {
 
   element = event.target;
+  
+  if (document.location.href === 'http://localhost:3001') {
   const body = element.parentElement;
   const idDiv = body.parentElement;
   const parkId = idDiv.getAttribute('data-card-id');
   const card = idDiv.parentElement;
-  if (card.dataset.favorite === 'true') {
-    localStorage.setItem('favoriteParks', JSON.stringify(favoriteParks.filter((park) => park.id !== parkId)));
+
+    if (card.dataset.favorite === 'true') {
+      localStorage.setItem('favoriteParks', JSON.stringify(favoriteParks.filter((park) => park.id !== parkId)));
+    } else {
+      localStorage.setItem('parksToVisit', JSON.stringify(parksToVisit.filter((park) => park.id !== parkId)));
+    };
+    location.reload(true);
   } else {
-    localStorage.setItem('parksToVisit', JSON.stringify(parksToVisit.filter((park) => park.id !== parkId)));
-  };
-  location.reload(true);
+    const body = element.parentElement;
+    const media = body.parentElement;
+    const card = media.parentElement;
+    /*if(card.dataset.favorite === 'true') fetch(update);
+    if(card.dataset.visited === 'true') fetch(update);
+    else fetch(destroy);*/
+    card.style.display = 'none';
+    console.log('hello');
+  }
 };
 
 function createCard(url, altText, parkCode, weatherInfo, designation, description, activities, operatingHours, standardHours, directionsUrl, directionsInfo, fullName, id) {
@@ -86,6 +99,7 @@ function createCard(url, altText, parkCode, weatherInfo, designation, descriptio
             </div>
             <button class="btn btn-secondary" type="button" onclick = "closeCard()">Close</button>
             <button class="btn btn-secondary" type="button" onclick = "addFavoritePark()">Add to Favorites!</button>
+            <button type="button" class="btn btn-secondary" onclick = "addToVisitedParks()">Been There Already!</button>
             <button class="btn btn-secondary" type="button" onclick = "addToParksToVisit()">Add to the Trails You want to Explore!</button>
             <button type="button" class="btn btn-secondary" onclick = "getThingsToDo()" id= "thingsToDo">Recommended Things To Do</button>
             </div>
@@ -124,8 +138,8 @@ function showFavorites() {
         favoriteParks[i].fullName, favoriteParks[i].url, favoriteParks[i].alt,
         favoriteParks[i].designation, true)
     };
-    };
   };
+};
 
 
 
@@ -146,8 +160,10 @@ function showParksToVisit() {
   };
 }
 
-showFavorites();
-showParksToVisit();
+if (document.location.href === 'http://localhost:3001/') {
+  showFavorites();
+  showParksToVisit();
+}
 
 const activitiesEl = (activities) => {
   if (activities.length) {
@@ -185,26 +201,70 @@ const closeCard = () => {
   document.querySelector('.card').style.display = 'none';
   location.reload();
 };
+if(parkList){
 parkList.addEventListener("click", getParkInfo);
-
+};
 // Function to toggle a movie as a favorite
-const addFavoritePark = () => {
+const addFavoritePark = async () => {
   let parkId = document.querySelector('#id').getAttribute('data-card-id');
   let parkName = document.querySelector('#fullName').textContent;
   let parkUrl = document.querySelector('#fullName').getAttribute('href');
   let imgUrl = document.querySelector('img').getAttribute('src');
   let imgText = document.querySelector('img').getAttribute('alt');
   let parkDesignation = document.querySelector('#designation').textContent;
+  if (document.location.href === 'http://localhost:3001/') {
+    if (!favoriteParks.find((park) => park.id === parkId)) {
+      const newFavPark = { id: parkId, fullName: parkName, directionsUrl: parkUrl, url: imgUrl, alt: imgText, designation: parkDesignation };
+      favoriteParks.push(newFavPark);
+    }
+    localStorage.setItem('favoriteParks', JSON.stringify(favoriteParks));
+    closeCard();
+  } else {
 
-  if (!favoriteParks.find((park) => park.id === parkId)) {
-    const newFavPark = { id: parkId, fullName: parkName, directionsUrl: parkUrl, url: imgUrl, alt: imgText, designation: parkDesignation };
-    favoriteParks.push(newFavPark);
+    const newFavPark = { full_name: parkName, directions_url: parkUrl, image_url: imgUrl, image_altText: imgText, designation: parkDesignation }
+
+    const response = await fetch(document.location.href, {
+      method: 'POST',
+      body: JSON.stringify({ newFavPark }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      alert("New favorite park was added to the database!");
+    } else {
+      alert(response.statusText);
+    }
   }
-  localStorage.setItem('favoriteParks', JSON.stringify(favoriteParks));
-  closeCard();
 };
 
-const addToParksToVisit = () => {
+const addToVisitedParks = async () => {
+  // let parkId = document.querySelector('#id').getAttribute('data-card-id');
+  let parkName = document.querySelector('#fullName').textContent;
+  let parkUrl = document.querySelector('#fullName').getAttribute('href');
+  let imgUrl = document.querySelector('img').getAttribute('src');
+  let imgText = document.querySelector('img').getAttribute('alt');
+  let parkDesignation = document.querySelector('#designation').textContent;
+
+  const visitedPark = { full_name: parkName, directions_url: parkUrl, image_url: imgUrl, image_altText: imgText, designation: parkDesignation }
+
+  const response = await fetch(document.location.href, {
+    method: 'POST',
+    body: JSON.stringify({ visitedPark }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    alert("Another one addded to your been-there list!");
+  } else {
+    alert(response.statusText);
+  }
+};
+
+const addToParksToVisit = async () => {
   let parkId = document.querySelector('#id').getAttribute('data-card-id');
   let parkName = document.querySelector('#fullName').textContent;
   let parkUrl = document.querySelector('#fullName').getAttribute('href');
@@ -212,13 +272,31 @@ const addToParksToVisit = () => {
   let imgText = document.querySelector('img').getAttribute('alt');
   let parkDesignation = document.querySelector('#designation').textContent;
 
+  if (document.location.href === 'http://localhost:3001') {
+    if (!parksToVisit.find((park) => park.id === parkId)) {
+      const newParkToVisit = { id: parkId, fullName: parkName, directionsUrl: parkUrl, url: imgUrl, alt: imgText, designation: parkDesignation };
+      parksToVisit.push(newParkToVisit);
+    };
+    localStorage.setItem('parksToVisit', JSON.stringify(parksToVisit));
+    closeCard();
+  } else {
 
-  if (!parksToVisit.find((park) => park.id === parkId)) {
-    const newParkToVisit = { id: parkId, fullName: parkName, directionsUrl: parkUrl, url: imgUrl, alt: imgText, designation: parkDesignation }
-    parksToVisit.push(newParkToVisit);
-  };
-  localStorage.setItem('parksToVisit', JSON.stringify(parksToVisit));
-  closeCard();
+    const newParkToVisit = { full_name: parkName, directions_url: parkUrl, image_url: imgUrl, image_altText: imgText, designation: parkDesignation }
+
+    const response = await fetch(document.location.href, {
+      method: 'POST',
+      body: JSON.stringify({ newParkToVisit }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      alert("New park was added to your bucket list!");
+    } else {
+      alert(response.statusText);
+    }
+  }
 };
 
 

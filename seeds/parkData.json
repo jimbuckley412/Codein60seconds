@@ -1,0 +1,25 @@
+[
+    {
+      "full_name":  "Abraham Lincoln Birthplace National Historical Park",
+      "designation": "National Historical Park",
+      "directions_url": "http://www.nps.gov/abli/planyourvisit/directions.htm",
+      "image_url": "https://www.nps.gov/common/uploads/structured_data/3C861078-1DD8-B71B-0B774A242EF6A706.jpg",
+      "image_altText":  "The Memorial Building surrounded by fall colors"
+      
+    },
+    {
+      "full_name": "Acadia National Park",
+      "designation": "National Park",
+      "directions_url": "http://www.nps.gov/adam/planyourvisit/directions.htm",
+      "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7B45AE-1DD8-B71B-0B7EE131C7DFC2F5.jpg",
+      "image_altText": "Large puffy clouds dot a brilliant blue sky as wave crash against the rocky coastline of Acadia."
+    },
+    {
+      "full_name": "Adams National Historical Park",
+      "designation": "National Historical Park",
+      "directions_url":"http://www.nps.gov/afam/planyourvisit/directions.htm",
+      "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7C7416-1DD8-B71B-0B1B30D0827F7C74.jpg",
+      "image_altText":"The Birthplaces of Presidents John Adams (right) and John Quincy Adams (left)" 
+    }
+
+  ]

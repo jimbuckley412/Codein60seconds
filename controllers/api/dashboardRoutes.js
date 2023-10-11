@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const imageData = require('../../seeds/imageData');
-const { Explorer, Post, Comment } = require('../../models');
+const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
 
 //Render the dashboard of the current explorer
 router.get('/', withAuth, async (req, res) => {

@@ -23,18 +23,27 @@ let thingsToDo = [];
 
 //Displays the homepage
 router.get('/', async (req, res) => {
-   
+
+    const loggedIn = req.session.loggedIn;
+   if(loggedIn){
     const explorerData  = await Explorer.findByPk(req.session.userId);
     const username = explorerData.username;
-    console.log(username);
     res.render('homepage', {imageData, activities, topics, 
                  state, stateParks, selectedPark, 
                  actId, selectedActivity, actParks,
                  topicId, selectedTopic, topicParks, 
                  thingsToDo, 
-                 loggedIn: req.session.loggedIn,
+                 loggedIn,
                  username,
                  background: imageData[0].file_path, stylesheet: "/css/style.css"});
+    } else {
+        res.render('homepage', {imageData, activities, topics, 
+            state, stateParks, selectedPark, 
+            actId, selectedActivity, actParks,
+            topicId, selectedTopic, topicParks, 
+            thingsToDo, 
+            background: imageData[0].file_path, stylesheet: "/css/style.css"});
+    }
 });
 
 router.post('/', async (req, res) => {

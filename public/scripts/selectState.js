@@ -36,7 +36,7 @@ const chooseState = async (event) => {
         const index = states.indexOf(selectedState);
         const stateCode = stateCodesArr[index];
 
-        const response = await fetch('/', {
+        const response = await fetch(document.location.href, {
             method: 'POST',
             body: JSON.stringify({ stateCode }),
             headers: {
@@ -44,6 +44,7 @@ const chooseState = async (event) => {
             }
         });
         if (response.ok) {
+            console.log(response);
             location.reload(true);
         } else {
             alert(response.statusText);

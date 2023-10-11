@@ -11,7 +11,9 @@ router.use('/api', apiRoutes);
 //Wildcard route: displays custom 404 page.
 router.get('*', async (req, res) => {
 
-    res.render('not-found', { background: imageData[0].file_path, stylesheet: "/css/style.css", not_found: true });
+    res.render('not-found', { 
+        loggedIn: req.session.loggedIn,
+        background: imageData[0].file_path, stylesheet: "/css/style.css", not_found: true });
 });
 
 module.exports = router;

@@ -4,7 +4,7 @@ const getParksByActivity = async (event) => {
     const actId = element.getAttribute('id');
     const actName = element.textContent;
 
-    const response = await fetch('/', {
+    const response = await fetch(document.location.href, {
         method: 'POST',
         body: JSON.stringify({ actId, actName }),
         headers: {
@@ -24,7 +24,7 @@ const getParksByTopic = async (event) => {
     const element = event.target;
     const topicId = element.getAttribute('id');
     const topicName = element.textContent;
-    const response = await fetch('/', {
+    const response = await fetch(document.location.href, {
         method: 'POST',
         body: JSON.stringify({ topicId, topicName }),
         headers: {
@@ -44,7 +44,7 @@ const closeModal = async () => {
 
     const clearModalData = true;
 
-    const response = await fetch('/', {
+    const response = await fetch(document.location.href, {
         method: 'POST',
         body: JSON.stringify({ clearModalData }),
         headers: {

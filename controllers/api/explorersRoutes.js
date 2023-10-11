@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const imageData = require('../../seeds/imageData');
-const { Explorer, Post, Comment } = require('../../models');
+const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
 const { Op } = require('sequelize');
 
 //Get all posts by all explorers

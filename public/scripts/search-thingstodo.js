@@ -7,7 +7,7 @@ const getThingsToDo = async () => {
   const code = document.querySelector('#parkCode').textContent.split(':')[1].trim();
   const name = document.querySelector('#fullName').textContent;
 
-  const response = await fetch('/', {
+  const response = await fetch(document.location.href, {
     method: 'POST',
     body: JSON.stringify({ code, name }),
     headers: {
