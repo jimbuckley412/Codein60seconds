@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-body">
+        <a href="/api/explorers/posts/{{id}}" class="card-link">See the Comments</a>
+        <a href="/api/explorers/posts/{{id}}/comment" class="card-link">Add a Comment</a>
+        {{#if isOwnPost}}
+        <a href="/api/dashboard/{{id}}/edit" class="card-link">Edit Your Post</a>
+        {{/if}}
+    </div>
+</div>

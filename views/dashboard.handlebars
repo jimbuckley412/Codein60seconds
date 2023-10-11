@@ -1,0 +1,30 @@
+{{#if loggedIn}}
+<div class="card">
+    <div class ="card-body">
+        <p>
+        <h2 class= "card-title">{{username}}</h2> 
+        Welcome to your dashboard, <span> user # {{id}}!</span>
+        What do you want to do today?
+        </p>
+    <a href="/api/dashboard/post">Add a New Post</a><br/>
+    <a href="/api/dashboard/comments">See all of Your Comments</a><br/>
+    <a href="/api/explorers/posts">See all Posts Available</a><br>
+    <a href="/api/explorers/search">Search Posts, Comments, and Parks Recommended or Visited by Fellow Explorers</a><br/>
+    <a href="/api/parks">Search for Parks</a><br/>
+    <a href="/api/parks/explorers/{{id}}/favorites">See Your Favorite Parks</a><br/>
+    <a href="/api/parks/explorers/{{id}}/visited">See Parks You Have Visited</a><br/>
+    <a href="/api/parks/explorers/{{id}}/to_visit">See Your Bucket List</a>
+    </div>
+</div>
+{{#if posts.length}}
+{{#each posts as |post| }}
+{{>post-details}}
+{{>see-add-comment-partials}}
+{{/each}}
+{{else}}
+<div class="card">
+    <div class ="card-body">
+        <h2 class= "card-title">You haven't posted anything yet, {{username}}. Explore a trail and add a review/talk about your experience of it.</h2> 
+    </div>
+{{/if}}
+{{/if}}

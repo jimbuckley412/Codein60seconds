@@ -1,0 +1,18 @@
+{{#if loggedIn}}
+<div class="card">
+    <div class ="card-body">
+        <h2 class= "card-title">Here are all the posts by {{username}}</h2> 
+{{#if allPosts.length}}
+{{#each allPosts as |post|}}
+{{>post-details}}
+{{>see-add-comment-partials}}
+{{/each}}
+{{else}}
+        <p>
+            <em>No posts added by {{username}} so far!</em>
+        </p>
+  {{/if}}
+   </div>
+</div>
+{{>continue-voyage-partials}}
+{{/if}}

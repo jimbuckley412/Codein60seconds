@@ -1,0 +1,8 @@
+<!-- Loop over each object in the posts array -->
+{{#if loggedIn}}
+{{#each posts as |post| }}
+{{>post-details}}
+{{>see-add-comment-partials}}
+{{/each}}
+{{/if}}
+{{>continue-voyage-partials}}

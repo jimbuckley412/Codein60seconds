@@ -1,0 +1,17 @@
+[
+    {
+      "title": "Authentication Middleware ",
+      "content": "Using authentication middleware can prevent unauthorized users from accessing certain routes.",
+      "explorer_id": 1
+    },
+    {
+      "title": "Use 'bcrypt'",
+      "content": "The 'bcrypt' package offers a simple alternative to encrypt passwords in order to store them in the database by using hashing algorithms.",
+      "explorer_id": 2
+    },
+    {
+      "title": "Setting the 'cookie' property of the session object.",
+      "content": "By doing it we can stipulate how much the session will last. After the cookie is deleted, the user will have to log again.",
+      "explorer_id": 3
+    }
+  ]

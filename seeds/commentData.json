@@ -1,0 +1,19 @@
+[
+    {
+      "content": "What you are saying sounds about right, but I am not sure. I will fact-check later.",
+      "explorer_id": 1,
+      "post_id": 3
+    },
+    {
+      
+      "content": "In my last project for the bootcamp I added a function called withAuth in the 'utils' folder just for that purpose.",
+      "explorer_id": 2,
+      "post_id": 1
+    },
+    {
+   
+      "content": "And... you can do all that (plus plenty more) without knowing any cryptography!",
+      "explorer_id": 3,
+      "post_id": 2
+    }
+  ]

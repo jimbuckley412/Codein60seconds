@@ -1,0 +1,18 @@
+{{#if loggedIn}}
+{{>post-details}}
+{{#if comments}}
+<div class="card">
+    <h3 class="card-title">Here are all of the comments for the selected post: </h3>
+    {{#each comments as |comment|}}
+    {{>comment-partials}}
+    {{/each}}
+    {{else}}
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">No comments for this post. Add one to join the conversation! </h3>
+            <a href="/api/explorers/posts/{{id}}/comment">Add Comment</a>
+        </div>
+    </div>
+    {{/if}}
+    {{>continue-voyage-partials}}
+    {{/if}}
