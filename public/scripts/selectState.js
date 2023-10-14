@@ -44,7 +44,6 @@ const chooseState = async (event) => {
             }
         });
         if (response.ok) {
-            console.log(response);
             location.reload(true);
         } else {
             alert(response.statusText);

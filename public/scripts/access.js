@@ -5,15 +5,15 @@ const accessFormHandler = async (event) => {
     const username = document.querySelector('#username').value.trim();
     const password = document.querySelector('#password').value.trim();
     
-    const accessForm = document.location.href;
+    
     if (username && password) {
       // Send a POST request to the API endpoint
-      const response = await fetch(accessForm, {
+      const response = await fetch(document.location.href, {
         method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-
+      
       if (response.ok) {
         document.location.replace('/api/dashboard'); 
       } else if(response.status === 403){

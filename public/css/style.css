@@ -111,6 +111,13 @@
     text-align: center;
 }
 
+.dropdown-menu {
+  max-height: 15vh;
+  overflow-y: scroll;
+  max-width: 22.5vw;
+  overflow-x: scroll;
+}
+
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;

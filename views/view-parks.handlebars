@@ -1,47 +1,89 @@
 {{#if loggedIn}}
-<div class="card">
-  <div class="card-body">
+      <div class="card">
+        <div class="card-body">
 
-    {{#if favoriteParks}}
-    {{#if ownParks}}
-    <h3 class="card-title">Here are your favorite parks, <span> {{username}}!</span></h3>
-    <h6 class="card-subtitle">(Id: #{{id}})</h6>
-    {{else}} 
-    <h3 class="card-title">Here are the favorite parks of<span> {{username}}</span>:</h3>
-    <h6 class="card-subtitle">(Id: #{{id}})</h6>
-    {{/if}}
-    {{#each favoriteParks as |park|}}
-    {{>view-parks-partials}}
-    {{/each}}
-    {{/if}}
+          {{#if favoriteParks}}
+          {{#if ownParks}}
+          <h3 class="card-title">Here are your favorite parks, <span> {{username}}!</span></h3>
+          <h6 class="card-subtitle">(Id: #{{id}})</h6>
+          {{#if length}}
+          {{#each favoriteParks as |park|}}
+          {{>view-parks-partials}}
+          {{/each}}
+          {{else}}
+          <h4 class="card-title"><em>You still haven't added any parks to your favorites, <span> {{username}}!</span>
+              Click on the
+              link to search parks: <a href='/api/parks/'>Search Parks</a></em></h4>
+          {{/if}}
+          {{else}}
+          <h3 class="card-title">Here are the favorite parks of<span> {{username}}</span>:</h3>
+          <h6 class="card-subtitle">(Id: #{{id}})</h6>
+          {{#if length}}
+          {{#each favoriteParks as |park|}}
+          {{>view-parks-partials}}
+          {{/each}}
+          {{else}}
+          <h4 class="card-title"><em><span> {{username}}</span> still has not added parks to his/her favorite list</em>
+          </h4>
+          {{/if}}
+          {{/if}}
+          {{/if}}
 
-    {{#if visitedParks}}
-    {{#if ownParks}}
-    <h3 class="card-title">Here are the parks that you already visited, <span> {{username}}!</span></h3>
-    <h6 class="card-subtitle">(Id: #{{id}})</h6>
-    {{else}}
-    <h3 class="card-title">Here are the parks that <span> {{username}}</span> has already visited:</h3>
-    <h6 class="card-subtitle">(Id: #{{id}})</h6>
-    {{/if}}
-    {{#each visitedParks as |park|}}
-    {{>view-parks-partials}}
-    {{/each}}
-    {{/if}}
+          {{#if visitedParks}}
+          {{#if ownParks}}
+          <h3 class="card-title">Here are the parks that you already visited, <span> {{username}}!</span></h3>
+          <h6 class="card-subtitle">(Id: #{{id}})</h6>
+          {{#if length}}
+          {{#each visitedParks as |park|}}
+          {{>view-parks-partials}}
+          {{/each}}
+          {{else}}
+          <h4 class="card-title"><em>You still haven't added any parks to your been-there list, <span>
+                {{username}}!</span> Click
+              on the link to search parks: <a href='/api/parks/'>Search Parks</a></em></h4>
+          {{/if}}
+          {{else}}
+          <h3 class="card-title">Here are the parks that <span> {{username}}</span> has already visited:</h3>
+          <h6 class="card-subtitle">(Id: #{{id}})</h6>
+          {{#if length}}
+          {{#each visitedParks as |park|}}
+          {{>view-parks-partials}}
+          {{/each}}
+          {{else}}
+          <h4 class="card-title"><em><span> {{username}}</span> still has not added parks to his/her been-there
+              list</em></h4>
+          {{/if}}
+          {{/if}}
+          {{/if}}
 
-    {{#if planToVisitParks}}
-    {{#if ownParks}}
-    <h3 class="card-title">Here are the parks that you want to visit, <span> {{username}}!</span></h3>
-    <h6 class="card-subtitle">(Id: #{{id}})</h6>
-    {{else}}
-    <h3 class="card-title">Here are the parks that <span> {{username}} </span> wants to visit:</h3>
-    <h6 class="card-subtitle">(Id: #{{id}})</h6>
-    {{/if}}
-    {{#each planToVisitParks as |park|}}
-    {{>view-parks-partials}}
-    {{/each}}
-    {{/if}}
-  </div>
-</div>
+          {{#if planToVisitParks}}
+          {{#if ownParks}}
+          <h3 class="card-title">Here are the parks that you want to visit, <span> {{username}}!</span></h3>
+          <h6 class="card-subtitle">(Id: #{{id}})</h6>
+          {{#if length}}
+          {{#each planToVisitParks as |park|}}
+          {{>view-parks-partials}}
+          {{/each}}
+          {{else}}
+          <h4 class="card-title"><em>You still haven't added any parks to your bucket-list, <span> {{username}}!</span>
+              Click on
+              the link to search parks: <a href='/api/parks/'>Search Parks</a></em></h4>
+          {{/if}}
+          {{else}}
+          <h3 class="card-title">Here are the parks that <span> {{username}} </span> wants to visit:</h3>
+          <h6 class="card-subtitle">(Id: #{{id}})</h6>
+          {{#if length}}
+          {{#each planToVisitParks as |park|}}
+          {{>view-parks-partials}}
+          {{/each}}
+          {{else}}
+          <h4 class="card-title"><em><span> {{username}}</span> still has not added parks to his/her bucket list</em>
+          </h4>
+          {{/if}}
+          {{/if}}
+          {{/if}}
+        </div>
+      </div>
 {{>continue-voyage-partials}}
 {{/if}}
 

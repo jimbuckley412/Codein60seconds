@@ -1,7 +1,7 @@
 const sequelize = require('../config/connection');
 const { Explorer, Post, Comment, ExplorerPark, Park } = require('../models');
 
-const explorerData = require('./ExplorerData.json');
+const explorerData = require('./explorerData.json');
 const postData = require('./postData.json');
 const commentData = require('./commentData.json');
 const parkData = require('./parkData.json');

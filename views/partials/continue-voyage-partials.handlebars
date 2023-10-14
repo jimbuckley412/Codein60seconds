@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card text-secondary bg-light border-dark">
     <h3><em>Continue your voyage through nature:</em></h3>
-    <a href="/">Go Back to the Homepage</a>
-    <a href="/api/dashboard">Go Back to your Dashboard</a>
-    <a href="/api/explorers/search">Go Back to Search More Explorers</a>
+    <a class= 'text-info' href="/">Go Back to the Homepage</a>
+    <a class= 'text-info'href="/api/dashboard">Go Back to your Dashboard</a>
+    <a class= 'text-info'href="/api/explorers/search">Go Back to Search More Explorers</a>
     {{#if author_name}}
-    <a href="/api/explorers/search/{{explorer_id}}/posts">Go Back to See More of
+    <a class= 'text-info' href="/api/explorers/search/{{explorer_id}}/posts">Go Back to See More of
         {{author_name}}'s Posts</a>
     {{/if}}
 </div>

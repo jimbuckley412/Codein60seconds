@@ -1,6 +1,6 @@
 const imageData = [
   {
-    name: 'Mountains',
+    name: 'Camping',
     file_path: '/images/img1.jpg',
   },
   {
@@ -8,7 +8,7 @@ const imageData = [
     file_path: '/images/img2.jpg',
   },
   {
-    name: 'Canyoning',
+    name: 'Water Activities',
     file_path: '/images/img3.jpg',
   },
   {
