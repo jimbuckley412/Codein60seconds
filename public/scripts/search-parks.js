@@ -156,21 +156,21 @@ function createCard(url, altText, parkCode, weatherInfo, designation, descriptio
             <div class="col-xs-12 col-md-6 col-lg-3">
             <div class="card bg-transparent">
             <div class= "card-body text-center">
-            <button class="btn btn-secondary" type="button" onclick = "addFavoritePark()">Favorite!</button>
+            <button class="btn btn-secondary" type="button" onclick = "addFavoritePark(event)">Favorite!</button>
             </div>
             </div>
             </div>
             <div class="col-xs-12 col-md-6 col-lg-3">
             <div class="card bg-transparent">            
             <div class= "card-body text-center">
-            <button type="button" class="btn btn-secondary" onclick = "addToVisitedParks()">Been There!</button>
+            <button type="button" class="btn btn-secondary" onclick = "addToVisitedParks(event)">Been There!</button>
             </div>
             </div>
             </div>
             <div class="col-xs-12 col-md-6 col-lg-3">
             <div class="card bg-transparent">            
             <div class= "card-body text-center">
-            <button class="btn btn-secondary" type="button" onclick = "addToParksToVisit()">Bucket List!</button>
+            <button class="btn btn-secondary" type="button" onclick = "addToParksToVisit(event)">Bucket List!</button>
             </div>
             </div>
             </div>
@@ -290,6 +290,7 @@ function showParksToVisit() {
   };
 };
 
+if(document.location.href === document.location.origin + '/') {
 const listsContainer = document.querySelector('#lists-container');
 const featuresParagraph = document.querySelector('#features');
 const featuresList = document.querySelector('#features-list');
@@ -315,6 +316,7 @@ const toggleListsHandler = () => {
 };
 
 listsBtn.addEventListener('click', toggleListsHandler);
+}
 
 const activitiesEl = (activities) => {
   if (activities.length) {
@@ -356,7 +358,10 @@ if (parkList) {
   parkList.addEventListener("click", getParkInfo);
 };
 // Function to toggle a movie as a favorite
-const addFavoritePark = async () => {
+const addFavoritePark = async (event) => {
+
+  event.stopPropagation();
+
   let parkId = document.querySelector('#id').getAttribute('data-card-id');
   let parkName = document.querySelector('#fullName').textContent;
   let parkUrl = document.querySelector('#fullName').getAttribute('href');
@@ -402,7 +407,6 @@ const addFavoritePark = async () => {
     closeCard();
 
   } else {
-
     const newFavPark = { full_name: parkName, directions_url: parkUrl, image_url: imgUrl, image_altText: imgText, designation: parkDesignation }
 
     const response = await fetch(document.location.href, {
@@ -419,7 +423,7 @@ const addFavoritePark = async () => {
       alert('Park is already on your favorites list.');
     } else if (response.status === 202) {
 
-      const wantsToUpdate = confirm('The parks is already on your been-there. Do you want to update its status?');
+      const wantsToUpdate = confirm('The parks is already on your been-there list. Do you want to update its status?');
       if (!wantsToUpdate) {
         alert('Ok, we are not going to change your lists. Keep exploring!');
         return;
@@ -458,7 +462,10 @@ const updateToFavorite = async (newFavPark) => {
   };
 };
 
-const addToVisitedParks = async () => {
+const addToVisitedParks = async (event) => {
+
+  event.stopPropagation();
+
 
   let parkId = document.querySelector('#id').getAttribute('data-card-id');
   let parkName = document.querySelector('#fullName').textContent;
@@ -496,7 +503,6 @@ const addToVisitedParks = async () => {
     };
     closeCard();
   } else {
-
     const visitedPark = { full_name: parkName, directions_url: parkUrl, image_url: imgUrl, image_altText: imgText, designation: parkDesignation }
 
     const response = await fetch(document.location.href, {
@@ -546,7 +552,10 @@ const updateToVisited = async (visitedPark) => {
 };
 
 
-const addToParksToVisit = async () => {
+const addToParksToVisit = async (event) => {
+
+  event.stopPropagation();
+
   let parkId = document.querySelector('#id').getAttribute('data-card-id');
   let parkName = document.querySelector('#fullName').textContent;
   let parkUrl = document.querySelector('#fullName').getAttribute('href');
@@ -584,7 +593,6 @@ const addToParksToVisit = async () => {
     };
     closeCard();
   } else {
-
     const newParkToVisit = { full_name: parkName, directions_url: parkUrl, image_url: imgUrl, image_altText: imgText, designation: parkDesignation }
 
     const response = await fetch(document.location.href, {

@@ -1,19 +1,47 @@
 [
-    {
-      "content": "What you are saying sounds about right, but I am not sure. I will fact-check later.",
-      "explorer_id": 1,
-      "post_id": 3
-    },
-    {
-      
-      "content": "In my last project for the bootcamp I added a function called withAuth in the 'utils' folder just for that purpose.",
-      "explorer_id": 2,
-      "post_id": 1
-    },
-    {
-   
-      "content": "And... you can do all that (plus plenty more) without knowing any cryptography!",
-      "explorer_id": 3,
-      "post_id": 2
-    }
-  ]
+  {
+    "content": "Breath-taking views of the ocean, mountains, and city.",
+    "explorer_id": 1,
+    "post_id": 2
+  },
+  {
+    "content": "WOWOWOWOW So much wow.",
+    "explorer_id": 2,
+    "post_id": 3
+  },
+  {
+    "content": "Had plenty of fun with my kids.",
+    "explorer_id": 3,
+    "post_id": 1
+  },
+  {
+    "content": "Breath-taking",
+    "explorer_id": 1,
+    "post_id": 3
+  },
+  {
+    "content": "I am going back tomorrow!",
+    "explorer_id": 2,
+    "post_id": 1
+  },
+  {
+    "content": "So much more to explore!",
+    "explorer_id": 3,
+    "post_id": 2
+  },
+  {
+    "content": "Reply to Sal from Amiko: My family also loves the place.",
+    "explorer_id": 1,
+    "post_id": 1
+  },
+  {
+    "content": "Reply to Sal from Lernantino: I was also taken aghast by the wildlife and the views.",
+    "explorer_id": 2,
+    "post_id": 2
+  },
+  {
+    "content": "Reply to Lernantino from Amiko: Leaves one speechless, right?",
+    "explorer_id": 3,
+    "post_id": 3
+  }
+]

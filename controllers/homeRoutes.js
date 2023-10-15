@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Explorer } = require('../models');
 const { apiKey, npsEndpoint, npsThingsToDoEndpoint, npsActivitiesEndpoint, npsTopicsEndpoint } = require('../public/nps-api-info/npsData');
 
+const mainImage = require('../seeds/mainImage');
 const imageData = require('../seeds/imageData');
 const activities = require('../public/nps-api-info/nps-activities');
 const topics = require('../public/nps-api-info/nps-topics');
@@ -36,7 +37,7 @@ router.get('/', async (req, res) => {
             thingsToDo,
             loggedIn,
             username,
-            background: imageData[0].file_path, stylesheet: "/css/style.css"
+            background: mainImage[0].file_path, stylesheet: "/css/style.css"
         });
     } else {
         res.render('homepage', {
@@ -45,7 +46,7 @@ router.get('/', async (req, res) => {
             actId, selectedActivity, actParks,
             topicId, selectedTopic, topicParks,
             thingsToDo,
-            background: imageData[0].file_path, stylesheet: "/css/style.css"
+            background: mainImage[0].file_path, stylesheet: "/css/style.css"
         });
     }
 });
@@ -67,6 +68,7 @@ router.post('/', async (req, res) => {
                 for (let i = 0; i < parksData.total; i++) {
                     const { parkCode, fullName, activities } = parksData.data[i];
                     const activitiesNames = activities.map((activity) => activity.name);
+                    //Filtering the results to ensure that the parks in the results allow nature-intensive activities
                     if (activitiesNames.includes('Hiking') || activitiesNames.includes('Biking')
                         || activitiesNames.includes('Kayaking') || activitiesNames.includes('Canoeing')
                         || activitiesNames.includes('Camping')) {

@@ -1,30 +1,41 @@
 {{#if loggedIn}}
-<div class="card">
-    <div class ="card-body">
-        <p>
-        <h2 class= "card-title">{{username}}</h2> 
-        Welcome to your dashboard, <span> user # {{id}}!</span>
-        What do you want to do today?
-        </p>
-    <a href="/api/dashboard/post">Add a New Post</a><br/>
-    <a href="/api/dashboard/comments">See all of Your Comments</a><br/>
-    <a href="/api/explorers/posts">See all Posts Available</a><br>
-    <a href="/api/explorers/search">Search Posts, Comments, and Parks Recommended or Visited by Fellow Explorers</a><br/>
-    <a href="/api/parks">Search for Parks</a><br/>
-    <a href="/api/parks/explorers/{{id}}/favorites">See Your Favorite Parks</a><br/>
-    <a href="/api/parks/explorers/{{id}}/visited">See Your Been-There List</a><br/>
-    <a href="/api/parks/explorers/{{id}}/to_visit">See Your Bucket List</a>
+<div class="container-fluid">
+    <div class="card-group row">
+        <div class="col-xs-12 col-md-10 col-lg-8 m-auto">
+            <div class="card border-dark">
+                <div class="card-body">
+                    <p>
+                    <h2 class="card-title text-warning">{{username}}</h2>
+                    Welcome to your dashboard,  user # <large><strong>{{id}}</strong></large>!
+                    What do you want to do today?
+                    </p>
+                    <a class="text-info" href="/api/dashboard/post">Add a New Post</a><br />
+                    <a class="text-info" href="/api/dashboard/comments">See all of Your Comments</a><br />
+                    <a class="text-info" href="/api/explorers/posts">See all Posts Available</a><br>
+                    <a class="text-info" href="/api/explorers/search">Search Posts, Comments, and Parks Recommended or Visited by Fellow
+                        Explorers</a><br />
+                    <a class="text-info" href="/api/parks">Search for Parks</a><br />
+                    <a class="text-info" href="/api/parks/explorers/{{id}}/favorites">See Your Favorite Parks</a><br />
+                    <a class="text-info" href="/api/parks/explorers/{{id}}/visited">See Your Been-There List</a><br />
+                    <a class="text-info" href="/api/parks/explorers/{{id}}/to_visit">See Your Bucket List</a>
+                </div>
+            </div>
+        </div>
+        {{#if posts.length}}
+        {{#each posts as |post| }}
+        {{>post-details}}
+        {{>see-add-comment-partials}}
+        {{/each}}
+        {{else}}
+        <div class="col-sx-12 col-md-10 col-lg-8 m-auto">
+            <div class="card border-dark">
+                <div class="card-body">
+                    <h2 class="card-title">You haven't posted anything yet, <span class="text-warning">{{username}}</span>. Explore a trail and add a
+                        review/talk about your experience of it.</h2>
+                </div>
+            </div>
+        </div>
+        {{/if}}
     </div>
 </div>
-{{#if posts.length}}
-{{#each posts as |post| }}
-{{>post-details}}
-{{>see-add-comment-partials}}
-{{/each}}
-{{else}}
-<div class="card">
-    <div class ="card-body">
-        <h2 class= "card-title">You haven't posted anything yet, {{username}}. Explore a trail and add a review/talk about your experience of it.</h2> 
-    </div>
-{{/if}}
 {{/if}}

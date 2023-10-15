@@ -1,9 +1,5 @@
 const imageData = [
   {
-    name: 'Camping',
-    file_path: '/images/img1.jpg',
-  },
-  {
     name: 'Hiking',
     file_path: '/images/img2.jpg',
   },
@@ -15,6 +11,11 @@ const imageData = [
     name: 'Biking',
     file_path: '/images/img4.jpg',
   },
+  {
+    name: 'Camping',
+    file_path: '/images/img5.jpg',
+  },
+
 ];
 
 module.exports = imageData;

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
+const mainImage = require('../../seeds/mainImage');
 const imageData = require('../../seeds/imageData');
 const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
 
@@ -23,6 +24,9 @@ let topicParks = [];
 
 let thingsToDo = [];
 
+const transparent = true;
+
+
 //Displays the homepage
 router.get('/', withAuth, async (req, res) => {
 
@@ -37,7 +41,9 @@ router.get('/', withAuth, async (req, res) => {
         thingsToDo,
         loggedIn: req.session.loggedIn,
         username,
-        background: imageData[0].file_path, stylesheet: "/css/style.css"
+        id: req.session.userId,
+        transparent,
+        background: mainImage[0].file_path, stylesheet: "/css/style.css"
     });
 });
 
@@ -46,9 +52,6 @@ router.post('/', async (req, res) => {
     if (req.body.stateCode) {
 
         state = req.body.stateCode;
-
-        console.log(state)
-
         await fetch(npsEndpoint + '?stateCode=' + req.body.stateCode + '&api_key=' + apiKey)
             .then((response) => {
                 if (!response.ok) {
@@ -157,12 +160,6 @@ router.post('/', async (req, res) => {
                 };
                 return res.status(201).json({ stateParks });
             }).catch((err) => console.error(err));
-    }
-
-    if (req.body.clearModalData) {
-        actParks = [];
-        topicParks = [];
-        thingsToDo = [];
     }
 
     if (req.body.newFavPark) {
@@ -379,6 +376,14 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/', withAuth, async (req, res) => {
+    
+    if (req.body.clearModalData) {
+        actParks = [];
+        topicParks = [];
+        thingsToDo = [];
+
+        res.status(200).json({message: 'Modal data was deleted.'})
+    } else{
     try {
         const park = await Park.findOne({
             where: {
@@ -408,7 +413,8 @@ router.put('/', withAuth, async (req, res) => {
         
     } catch (err) {
         res.status(400).json({ message: 'Something went wrong with the request' });
-    }
+    };
+}
 
 });
 
@@ -441,7 +447,8 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
             length,
             loggedIn: req.session.loggedIn,
             ownParks,
-            background: imageData[1].file_path,
+            transparent,
+            background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {
@@ -478,7 +485,8 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
             length,
             loggedIn: req.session.loggedIn,
             ownParks,
-            background: imageData[1].file_path,
+            transparent,
+            background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {
@@ -515,7 +523,8 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
             length,
             loggedIn: req.session.loggedIn,
             ownParks,
-            background: imageData[1].file_path,
+            transparent,
+            background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {

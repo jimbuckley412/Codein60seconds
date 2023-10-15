@@ -6,7 +6,9 @@ const getThingsToDo = async () => {
  
   const code = document.querySelector('#parkCode').textContent.split(':')[1].trim();
   const name = document.querySelector('#fullName').textContent;
+  if(document.location.href === document.location.origin + '/'){
   container.innerHTML = "";
+  };
   const response = await fetch(document.location.href, {
     method: 'POST',
     body: JSON.stringify({ code, name }),

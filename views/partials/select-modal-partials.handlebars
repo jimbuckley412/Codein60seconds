@@ -1,10 +1,10 @@
 <div class="card-group row">
     <div class="col-xs-12 col-md-8 col-lg-6">
-        <div class="modal bg-transparent"
+        <div class="modal bg-transparent border-light"
             style=" display: block;" tabindex="-1" role="dialog"
             {{#if actParks}} id="{{actId}}" {{else}} id="{{topicId}}" {{/if}}>
             <div class="modal-dialog" role="document">
-                <div class="modal-content bg-light text-light">
+                <div class="modal-content bg-transparent text-light">
                     <div class="modal-header">
                         {{#if actParks}} <h5 class="modal-title text-dark" id="exampleModalLongTitle">Parks where you can perform
                             your chosen activity:
@@ -21,7 +21,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body bg-light">
+                    <div class="modal-body">
                         {{#if actParks}}
                         {{#each actParks as |park|}}
                         <h5><a href="{{park.url}}" target="_blank">{{park.fullName}}</a></h5>
