@@ -1,6 +1,6 @@
-<div class="card-group" style="position: absolute; top: 20vh; left: 25vw;">
+<div class="card-group" style="position: absolute; top: 23vh; left: 25vw;">
     <form class="form login-form">
-        <label for='state' style="color: gray;">Choose a State to Explore its Natural Resources</label>
+        <label for='state' style="color: white;">Choose a State to Explore its Natural Resources</label>
         {{#unless state}}
         <input type='text' name='state' id='state' placeholder='Enter a State'>
         {{else}}
@@ -8,9 +8,9 @@
         {{/unless}}
         <button class="btn btn-secondary" type="submit">Start your Voyage</button>
     </form>
-    <div class="dropdown" style="position: relative; top:2.5vh; left: 25vw;">
-        <h5 style="position: absolute; left: -20vw; color: darkgray;"><label for="activitiesBtn">Or, search for parks according to what you want to do: </label></h5>
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
+    <div class="dropdown" style="position: relative; top:5vh; left: 25vw; ">
+        <h5 style="position: absolute; left: -20vw; color: white;"><label for="activitiesBtn">Or, search for parks according to what you want to do: </label></h5>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 0vh; left: 3vw;">
             Select an Activity
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -20,9 +20,9 @@
         </div>
     </div>
 </div>
-<div class="dropdown" style="position: relative; top: 0vh; left: 42.5vw;">
-        <h5 style="position: absolute; left: -20vw; color: lightgray;"><label for="activitiesBtn">Or, search for parks according to topics of interest: </label></h5>
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: 5vh;">
+<div class="dropdown" style="position: relative; top: 0vh; left: 31vw;">
+        <h5 style="position: absolute; left: -20vw; color: white;"><label for="activitiesBtn">Or, search for parks according to topics of interest: </label></h5>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="activitiesBtn" data-bs-toggle="dropdown" style="position: relative; top: -1vh; left: 2vw;">
             Select a Topic
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

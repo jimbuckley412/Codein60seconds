@@ -15,6 +15,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   transition: all 0.3s ease-in-out;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .header-content {
@@ -84,7 +85,6 @@
 body {
   color: #FFFFFF;
   font-family: Arial, sans-serif;
-  margin: 0;
   padding: 0;
   height: 100vh;
 }
@@ -94,7 +94,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-
+  font-family: sans-serif;
 }
 
 #motto {
@@ -102,20 +102,38 @@ body {
   color: white;
 }
 .container {
-  padding-top: 0px;
-  padding-left: 500px;
-  padding-right: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 400px;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
 }
-
 .container h1 {
   font-size: 50px;
   text-align: center;
   color: white;
+
 }
 .login-form {
-  margin: auto;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  position: relative;
+  display: grid;
+  place-items:center;
+  
 }
-
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -125,3 +143,4 @@ body {
     margin-top: 10px;
   }
 }
+ 
