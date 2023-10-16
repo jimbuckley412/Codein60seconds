@@ -2,10 +2,10 @@
 <div class="container-fluid">
   <div class="card-group row">
     {{#if favoriteParks}}
+    {{#if ownParks}}
     <div class="col-xs-12 col-md-10 col-lg-8 m-auto">
       <div class="card bg-transparent text-light border-light">
         <div class="card-body">
-          {{#if ownParks}}
           <h3 class="card-title">Here are your favorite parks, <span class="text-warning">{{username}}</span>!</h3>
           <h6 class="card-subtitle">(Id: #{{id}})</h6>
         </div>

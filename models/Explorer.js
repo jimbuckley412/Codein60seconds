@@ -28,6 +28,15 @@ Explorer.init(
         len: [8],
       },
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+      validate: { 
+        isEmail:true
+      }
+
+    }
   },
   {
     hooks: {

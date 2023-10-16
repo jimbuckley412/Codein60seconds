@@ -5,11 +5,13 @@
     },
     {
       "username": "Lernantino",
-      "password": "password12345"
+      "password": "password12345",
+      "email": "this_email@mail.com"
     },
     {
       "username": "Amiko",
-      "password": "password12345"
+      "password": "password12345",
+      "email": "that_email@mail.com"
     }
   ]
   

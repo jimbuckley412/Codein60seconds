@@ -10,7 +10,9 @@
             style="max-height: 25vh;" />
         </figure>
         <h4>{{designation}}</h4>
+        {{#if ownParks}}
         <button class="btn btn-danger" type="button" onclick="deleteCard(event)">Remove from the List</button>
+        {{/if}}
       </div>
     </div>
   </div>
