@@ -160,8 +160,8 @@ router.get('/search/:id/posts', withAuth, async (req, res) => {
         const allPosts = allPostsData.map((post) => post.get({ plain: true }));
 
         allPosts.forEach((post) => {
-            post.author = username;
-            post.isOwnPost = req.params.id === req.session.userId;
+            post.author = explorer;
+            post.isOwnPost = (req.params.id == req.session.userId);
         });
 
         res.render('all-posts-by-an-explorer', {
