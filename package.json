@@ -1,7 +1,7 @@
 {
     "name": "trail-blazer",
     "version": "1.0.0",
-    "description": "A cutting edge trail finding app. You just need a simple login with a username and password.",
+    "description": "A cutting edge trail finding app. You just need a simple sign-up/login with a username and password to go to the members-only CMS blog.Else, you can enjoy the features available without membership.",
     "main": "server.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,7 +20,9 @@
       "express-session": "^1.17.1",
       "handlebars": "^4.7.6",
       "mysql2": "^3.6.1",
-      "sequelize": "^6.33.0"
+      "sequelize": "^6.33.0",
+      "axios": "^1.5.1",
+      "validator": "^13.11.0"
     },
     "devDependencies": {
       "nodemon": "^2.0.7"

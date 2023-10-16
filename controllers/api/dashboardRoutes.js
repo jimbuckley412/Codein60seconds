@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const imageData = require('../../seeds/imageData');
-const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
+const { Explorer, Post, Comment } = require('../../models');
 
 //Render the dashboard of the current explorer
 router.get('/', withAuth, async (req, res) => {
@@ -220,9 +220,12 @@ router.get('/comments/:id/edit', withAuth, async (req, res) => {
 
     const commentData = await Comment.findByPk(req.params.id);
     const comment = commentData.get({ plain: true });
+    const { username } = await Explorer.findByPk(req.session.userId, {
+      attributes:['username']
+    });
 
     return res.render('edit', {
-      ...comment,
+      ...comment, username,
       loggedIn: req.session.loggedIn,
       user_id: req.session.userId,
       background: imageData[Math.floor(Math.random() * 4)].file_path,

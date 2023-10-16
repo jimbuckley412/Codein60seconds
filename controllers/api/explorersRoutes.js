@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const imageData = require('../../seeds/imageData');
-const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
+const { Explorer, Post, Comment } = require('../../models');
 const { Op } = require('sequelize');
 
 //Get all posts by all explorers
-router.get('/posts', async (req, res) => {
+router.get('/posts', withAuth, async (req, res) => {
     try {
         const postData = await Post.findAll({
             include: [
@@ -21,9 +21,13 @@ router.get('/posts', async (req, res) => {
             post.isOwnPost = post.explorer_id === req.session.userId;
             post.author = post.explorer.username;
         });
+
+        const { username } = await Explorer.findByPk(req.session.userId);
+
         res.render('all-posts', {
             posts,
             loggedIn: req.session.loggedIn,
+            username,
             user_id: req.session.userId,
             background: imageData[0].file_path,
             stylesheet: "/css/style.css"
@@ -34,7 +38,7 @@ router.get('/posts', async (req, res) => {
 });
 
 //Get one post together with all of the comments on it
-router.get('/posts/:id', async (req, res) => {
+router.get('/posts/:id', withAuth, async (req, res) => {
     try {
         const postData = await Post.findByPk(req.params.id, {
             include: [Comment]
@@ -146,7 +150,10 @@ router.get('/search/:id/posts', withAuth, async (req, res) => {
                 explorer_id: req.params.id
             }
         });
-        const { username } = await Explorer.findByPk(req.params.id, {
+
+        const explorerData = await Explorer.findByPk(req.params.id);
+        const explorer = explorerData.username;
+        const { username } = await Explorer.findByPk(req.session.userId, {
             attributes: ['username']
         });
 
@@ -158,8 +165,7 @@ router.get('/search/:id/posts', withAuth, async (req, res) => {
         });
 
         res.render('all-posts-by-an-explorer', {
-            username,
-            allPosts,
+            username, explorer, allPosts,
             loggedIn: req.session.loggedIn,
             user_id: req.session.userId,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
