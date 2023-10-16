@@ -1,3 +1,5 @@
+if(location.pathname.endsWith('login') || location.pathname.endsWith('signup')){
+
 const accessFormHandler = async (event) => {
     event.preventDefault();
   
@@ -30,4 +32,50 @@ const accessFormHandler = async (event) => {
   };
 
   document.querySelector('.login-form').addEventListener('submit', accessFormHandler);
+};
+
+  if(location.pathname.endsWith('dashboard')){
+
+   
+    const changePWForm = document.querySelector('#change-pw');
+
+    const changePWHandler = async (event) => {
+      event.preventDefault();
+      const pwInputEl = document.querySelector('#pw');
+      const confirmInputEl = document.querySelector('#confirm-pw');
+      const pwInput = pwInputEl.value.trim();
+      const confirmInput = confirmInputEl.value.trim();
+      
+      if(pwInput === ''){
+        alert('No new password has been entered.')
+      };
+
+      if(pwInput !== confirmInput){
+
+        alert(`The passwords don't match. Please, try again and remember that passwords are case-sensitive.`);
+
+      } else {
+        const newPassword = pwInput;
+
+        console.log(newPassword);
+        const response = await fetch('/api/dashboard', {
+          method: 'PUT',
+          body: JSON.stringify({ newPassword }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if(response.ok){
+
+          alert('New password has been securely stored in the database!');
+        } else {
+          alert(response.statusText);
+        };
+      };   
+
+    };
+
+    changePWForm.addEventListener('submit', changePWHandler);
+  };
   

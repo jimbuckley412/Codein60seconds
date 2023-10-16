@@ -1,4 +1,4 @@
-const subscribeForm = document.querySelector('.form');
+let subscribeForm = document.querySelector('.form');
 
 if(subscribeForm){
 const subscribeHandler = async () => {
@@ -29,7 +29,7 @@ const subscribeHandler = async () => {
 document.querySelector('.btn-success').addEventListener('click', subscribeHandler);
 };
 
-const unsubscribeBtn = document.querySelector('#noEmail');
+let unsubscribeBtn = document.querySelector('#noEmail');
 
 if(unsubscribeBtn){
 
