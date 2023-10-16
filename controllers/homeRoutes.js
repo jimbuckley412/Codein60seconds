@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Explorer } = require('../models');
 const { apiKey, npsEndpoint, npsThingsToDoEndpoint, npsActivitiesEndpoint, npsTopicsEndpoint } = require('../public/nps-api-info/npsData');
 
+const mainImage = require('../seeds/mainImage');
 const imageData = require('../seeds/imageData');
 const activities = require('../public/nps-api-info/nps-activities');
 const topics = require('../public/nps-api-info/nps-topics');
@@ -25,146 +26,164 @@ let thingsToDo = [];
 router.get('/', async (req, res) => {
 
     const loggedIn = req.session.loggedIn;
-   if(loggedIn){
-    const explorerData  = await Explorer.findByPk(req.session.userId);
-    const username = explorerData.username;
-    res.render('homepage', {imageData, activities, topics, 
-                 state, stateParks, selectedPark, 
-                 actId, selectedActivity, actParks,
-                 topicId, selectedTopic, topicParks, 
-                 thingsToDo, 
-                 loggedIn,
-                 username,
-                 background: imageData[0].file_path, stylesheet: "/css/style.css"});
-    } else {
-        res.render('homepage', {imageData, activities, topics, 
-            state, stateParks, selectedPark, 
+    if (loggedIn) {
+        const explorerData = await Explorer.findByPk(req.session.userId);
+        const username = explorerData.username;
+        res.render('homepage', {
+            imageData, activities, topics,
+            state, stateParks, selectedPark,
             actId, selectedActivity, actParks,
-            topicId, selectedTopic, topicParks, 
-            thingsToDo, 
-            background: imageData[0].file_path, stylesheet: "/css/style.css"});
+            topicId, selectedTopic, topicParks,
+            thingsToDo,
+            loggedIn,
+            username,
+            background: mainImage[0].file_path, stylesheet: "/css/style.css"
+        });
+    } else {
+        res.render('homepage', {
+            imageData, activities, topics,
+            state, stateParks, selectedPark,
+            actId, selectedActivity, actParks,
+            topicId, selectedTopic, topicParks,
+            thingsToDo,
+            background: mainImage[0].file_path, stylesheet: "/css/style.css"
+        });
     }
 });
 
 router.post('/', async (req, res) => {
 
-    if(req.body.stateCode){
+    if (req.body.stateCode) {
 
-    state = req.body.stateCode;
-    
-    await fetch(npsEndpoint + '?stateCode=' + req.body.stateCode + '&api_key=' + apiKey)
-        .then((response) => {
-            if (!response.ok) {
-                return res.json({ message: response.statusText });
-            }
-            return response.json();
-        }).then((parksData) => {
-            stateParks = [];
-            for (let i = 0; i < parksData.total; i++) {
-                const { parkCode, fullName } = parksData.data[i];
-                const park = {
-                    parkCode,
-                    fullName
+        state = req.body.stateCode;
+
+        await fetch(npsEndpoint + '?stateCode=' + req.body.stateCode + '&api_key=' + apiKey)
+            .then((response) => {
+                if (!response.ok) {
+                    return res.json({ message: response.statusText });
+                }
+                return response.json();
+            }).then((parksData) => {
+                stateParks = [];
+                for (let i = 0; i < parksData.total; i++) {
+                    const { parkCode, fullName, activities } = parksData.data[i];
+                    const activitiesNames = activities.map((activity) => activity.name);
+                    //Filtering the results to ensure that the parks in the results allow nature-intensive activities
+                    if (activitiesNames.includes('Hiking') || activitiesNames.includes('Biking')
+                        || activitiesNames.includes('Kayaking') || activitiesNames.includes('Canoeing')
+                        || activitiesNames.includes('Camping')) {
+
+                        const park = {
+                            parkCode,
+                            fullName
+                        };
+                        stateParks.push(park);
+                    }
                 };
-                stateParks.push(park);
-            };
-            return res.status(201).json({ stateParks });
-        }).catch((err) => console.error(err));
+                return res.status(201).json({ stateParks });
+            }).catch((err) => console.error(err));
     }
-    if(req.body.code){
+    if (req.body.code) {
 
         selectedPark = req.body.name;
 
-        await fetch(npsThingsToDoEndpoint+ '?parkCode=' + req.body.code + '&api_key=' + apiKey)
-        .then((response) => {
-            if (!response.ok) {
-                return res.json({ message: response.statusText });
-            }
-            return response.json();
-        }).then((thingsData) => {
-            thingsToDo = [];
-            for (let i = 0; i < thingsData.data.length; i++) {
-                const { id, url, title, 
-                    shortDescription, images, season, 
-                    timeOfDay, duration } = thingsData.data[i];
+        await fetch(npsThingsToDoEndpoint + '?parkCode=' + req.body.code + '&api_key=' + apiKey)
+            .then((response) => {
+                if (!response.ok) {
+                    return res.json({ message: response.statusText });
+                }
+                return response.json();
+            }).then((thingsData) => {
+                thingsToDo = [];
+                for (let i = 0; i < thingsData.data.length; i++) {
+                    const { id, url, title,
+                        shortDescription, images, season,
+                        timeOfDay, duration } = thingsData.data[i];
 
-                const TimeOfDay = timeOfDay? timeOfDay: 'N/A';
-                const Duration = duration? duration: 'N/A';
-                const thing = { id, url, title, 
-                    shortDescription, images, season, 
-                  TimeOfDay, Duration };
+                    const TimeOfDay = timeOfDay ? timeOfDay : 'N/A';
+                    const Duration = duration ? duration : 'N/A';
+                    const thing = {
+                        id, url, title,
+                        shortDescription, images, season,
+                        TimeOfDay, Duration
+                    };
 
-                thingsToDo.push(thing);
-            };
-            return res.status(201).json({ thingsToDo });
-        }).catch((err) => console.error(err));
+                    thingsToDo.push(thing);
+                };
+                return res.status(201).json({ thingsToDo });
+            }).catch((err) => console.error(err));
 
     }
 
-    if(req.body.clearThingsToDo){
+    if (req.body.clearThingsToDo) {
         thingsToDo = [];
     }
 
-    if(req.body.actId){
+    if (req.body.actId) {
         actId = req.body.actId;
         selectedActivity = req.body.actName;
 
         await fetch(npsActivitiesEndpoint + '?id=' + req.body.actId + '&api_key=' + apiKey)
-        .then((response) => {
-            if (!response.ok) {
-                return res.json({ message: response.statusText });
-            }
-            return response.json();
-        }).then((actParksData) => {
-            actParks = [];
-            for (let i = 0; i < actParksData.data[0].parks.length; i++) {
-                const { states, parkCode, designation, fullName, url } = actParksData.data[0].parks[i];
-                const park = {
-                    states,
-                    parkCode,
-                    designation,
-                    fullName,
-                    url
+            .then((response) => {
+                if (!response.ok) {
+                    return res.json({ message: response.statusText });
+                }
+                return response.json();
+            }).then((actParksData) => {
+                actParks = [];
+                for (let i = 0; i < actParksData.data[0].parks.length; i++) {
+                    const { states, parkCode, designation, fullName, url } = actParksData.data[0].parks[i];
+                    const park = {
+                        states,
+                        parkCode,
+                        designation,
+                        fullName,
+                        url
+                    };
+                    actParks.push(park);
                 };
-                actParks.push(park);
-            };
-            return res.status(201).json({ stateParks });
-        }).catch((err) => console.error(err));
+                return res.status(201).json({ stateParks });
+            }).catch((err) => console.error(err));
     }
 
-    if(req.body.topicId){
+    if (req.body.topicId) {
 
         topicId = req.body.topicId;
         selectedTopic = req.body.topicName;
 
         await fetch(npsTopicsEndpoint + '?id=' + req.body.topicId + '&api_key=' + apiKey)
-        .then((response) => {
-            if (!response.ok) {
-                return res.json({ message: response.statusText });
-            }
-            return response.json();
-        }).then((topicParksData) => {
-             topicParks = [];
-            for (let i = 0; i < topicParksData.data[0].parks.length; i++) {
-                const { states, parkCode, designation, fullName, url } = topicParksData.data[0].parks[i];
-                const park = {
-                    states,
-                    parkCode,
-                    designation,
-                    fullName,
-                    url
+            .then((response) => {
+                if (!response.ok) {
+                    return res.json({ message: response.statusText });
+                }
+                return response.json();
+            }).then((topicParksData) => {
+                topicParks = [];
+                for (let i = 0; i < topicParksData.data[0].parks.length; i++) {
+                    const { states, parkCode, designation, fullName, url } = topicParksData.data[0].parks[i];
+                    const park = {
+                        states,
+                        parkCode,
+                        designation,
+                        fullName,
+                        url
+                    };
+                    topicParks.push(park);
                 };
-                topicParks.push(park);
-            };
-            return res.status(201).json({ stateParks });
-        }).catch((err) => console.error(err));
+                return res.status(201).json({ stateParks });
+            }).catch((err) => console.error(err));
     }
 
-    if(req.body.clearModalData){
-        actParks= [];
-        topicParks= [];
-        thingsToDo= [];
-    }
 });
+
+router.put('/', (req, res) =>{
+
+    if (req.body.clearModalData) {
+        actParks = [];
+        topicParks = [];
+        thingsToDo = [];
+        res.status(200).json({message: 'Data to render modal was cleared.'});
+    };
+})
 
 module.exports = router;

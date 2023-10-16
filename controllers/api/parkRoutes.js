@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
+const mainImage = require('../../seeds/mainImage');
 const imageData = require('../../seeds/imageData');
 const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
 
@@ -23,6 +24,9 @@ let topicParks = [];
 
 let thingsToDo = [];
 
+const transparent = true;
+
+
 //Displays the homepage
 router.get('/', withAuth, async (req, res) => {
 
@@ -37,7 +41,9 @@ router.get('/', withAuth, async (req, res) => {
         thingsToDo,
         loggedIn: req.session.loggedIn,
         username,
-        background: imageData[0].file_path, stylesheet: "/css/style.css"
+        id: req.session.userId,
+        transparent,
+        background: mainImage[0].file_path, stylesheet: "/css/style.css"
     });
 });
 
@@ -46,9 +52,6 @@ router.post('/', async (req, res) => {
     if (req.body.stateCode) {
 
         state = req.body.stateCode;
-
-        console.log(state)
-
         await fetch(npsEndpoint + '?stateCode=' + req.body.stateCode + '&api_key=' + apiKey)
             .then((response) => {
                 if (!response.ok) {
@@ -159,92 +162,260 @@ router.post('/', async (req, res) => {
             }).catch((err) => console.error(err));
     }
 
+    if (req.body.newFavPark) {
+
+        try {
+
+            const existentParkData = await Park.findOne({
+                where: {
+                    full_name: req.body.newFavPark.full_name
+                }
+            });
+
+            let newFavData;
+            let parkId
+
+            if (!existentParkData) {
+
+                newFavData = await Park.create(req.body.newFavPark);
+
+                parkId = newFavData.id;
+
+                const explorerPark = {
+                    is_favorite: true,
+                    was_visited: true,
+                    explorer_id: req.session.userId,
+                    park_id: parkId
+                };
+                await ExplorerPark.create(explorerPark);
+                res.status(201).json({ message: "New favorite park added!" });
+
+            } else {
+                newFavData = existentParkData;
+
+                parkId = newFavData.id;
+
+                const existentExplorerParkData = await ExplorerPark.findOne({
+                    where: {
+                        explorer_id: req.session.userId,
+                        park_id: parkId
+                    }
+                });
+
+                if (!existentExplorerParkData) {
+
+                    const explorerPark = {
+                        is_favorite: true,
+                        was_visited: true,
+                        explorer_id: req.session.userId,
+                        park_id: parkId
+                    };
+                    await ExplorerPark.create(explorerPark);
+
+                    res.status(201).json({ message: "New favorite park added!" });
+
+                } else {
+                    const Is_Favorite = existentExplorerParkData.is_favorite;
+                    const Has_Visited = existentExplorerParkData.has_visited;
+                    const Wants_To_Visit = existentExplorerParkData.wants_to_visit;
+                    if (Is_Favorite) {
+                        res.status(200).json({ message: 'Park is already in the favorites list.' });
+                    } else if (Has_Visited) {
+                        res.status(202).json({ message: 'Park is already on the been there list.' });
+                    } else if (Wants_To_Visit) {
+                        res.status(204).json({ message: 'Park is already on the bucket list.' });
+                    } else {
+                        res.status(500);
+                    };
+                };
+
+            };
+
+        } catch (err) {
+            res.status(400).json(err);
+        };
+    }
+
+    if (req.body.visitedPark) {
+
+        try {
+
+            const existentParkData = await Park.findOne({
+                where: {
+                    full_name: req.body.visitedPark.full_name
+                }
+            });
+
+            let parkId
+
+            if (!existentParkData) {
+
+                const newVisitedData = await Park.create(req.body.visitedPark);
+
+                parkId = newVisitedData.id;
+
+                const explorerPark = {
+                    was_visited: true,
+                    explorer_id: req.session.userId,
+                    park_id: parkId
+                };
+                await ExplorerPark.create(explorerPark);
+                res.status(201).json({ message: "New park added to been there list!" });
+
+            } else {
+                parkId = existentParkData.id
+
+                const existentExplorerParkData = await ExplorerPark.findOne({
+                    where: {
+                        explorer_id: req.session.userId,
+                        park_id: parkId
+                    }
+                });
+
+                if (!existentExplorerParkData) {
+
+                    const explorerPark = {
+                        was_visited: true,
+                        explorer_id: req.session.userId,
+                        park_id: parkId
+                    };
+                    await ExplorerPark.create(explorerPark);
+
+                    res.status(201).json({ message: "New park added to been there list!" });
+
+                } else {
+                    const Is_Favorite = existentExplorerParkData.is_favorite;
+                    const Has_Visited = existentExplorerParkData.has_visited;
+                    const Wants_To_Visit = existentExplorerParkData.wants_to_visit;
+                    if (Is_Favorite) {
+                        res.status(200).json({ message: 'Park is already in the favorites and been there lists.' });
+                    } else if (Has_Visited) {
+                        res.status(204).json({ message: 'Park is already on the been there list.' });
+                    } else if (Wants_To_Visit) {
+                        res.status(202).json({ message: 'Park is already on the bucket list.' });
+                    } else {
+                        res.status(500);
+                    };
+                };
+
+            };
+
+        } catch (err) {
+            res.status(400).json(err);
+        };
+    }
+
+    if (req.body.newParkToVisit) {
+
+        try {
+
+            const existentParkData = await Park.findOne({
+                where: {
+                    full_name: req.body.newParkToVisit.full_name
+                }
+            });
+
+            let parkId
+
+            if (!existentParkData) {
+
+                const newToVisitData = await Park.create(req.body.newParkToVisit);
+
+                parkId = newToVisitData.id;
+
+                const explorerPark = {
+                    wants_to_visit: true,
+                    explorer_id: req.session.userId,
+                    park_id: parkId
+                };
+                await ExplorerPark.create(explorerPark);
+                res.status(201).json({ message: "New park added to your bucket list!" });
+
+            } else {
+                parkId = existentParkData.id
+
+                const existentExplorerParkData = await ExplorerPark.findOne({
+                    where: {
+                        explorer_id: req.session.userId,
+                        park_id: parkId
+                    }
+                });
+
+                if (!existentExplorerParkData) {
+
+                    const explorerPark = {
+                        wants_to_visit: true,
+                        explorer_id: req.session.userId,
+                        park_id: parkId
+                    };
+                    await ExplorerPark.create(explorerPark);
+
+                    res.status(201).json({ message: "New park added to your bucket list!" });
+
+                } else {
+                    const Is_Favorite = existentExplorerParkData.is_favorite;
+                    const Has_Visited = existentExplorerParkData.has_visited;
+                    const Wants_To_Visit = existentExplorerParkData.wants_to_visit;
+                    if (Is_Favorite) {
+                        res.status(202).json({ message: 'Park is already in the favorites and been there lists.' });
+                    } else if (Has_Visited) {
+                        res.status(204).json({ message: 'Park is already on the been there list.' });
+                    } else if (Wants_To_Visit) {
+                        res.status(200).json({ message: 'Park is already on the bucket list.' });
+                    } else {
+                        res.status(500);
+                    };
+                };
+
+            };
+
+        } catch (err) {
+            res.status(400).json(err);
+        };
+    };
+});
+
+router.put('/', withAuth, async (req, res) => {
+    
     if (req.body.clearModalData) {
         actParks = [];
         topicParks = [];
         thingsToDo = [];
-    }
 
-    if (req.body.newFavPark) {
-       
-        try {
-            const newFavData = await Park.create(req.body.newFavPark);
-            
-            const parkId = newFavData.id;
+        res.status(200).json({message: 'Modal data was deleted.'})
+    } else{
+    try {
+        const park = await Park.findOne({
+            where: {
+                full_name: req.body.full_name
+            }
+        });
+        const parkId = park.id;
 
-                const explorerPark = {
-                is_favorite: true,
+        
+        const updatedParkData = await ExplorerPark.update({
+            is_favorite: req.body.is_favorite,
+            has_visited: req.body.has_visited,
+            wants_to_visit: req.body.wants_to_visit
+        }, {
+            where: {
                 explorer_id: req.session.userId,
                 park_id: parkId
-            };
-            await ExplorerPark.create(explorerPark);
+            }
+        });
 
-            res.status(201).json({ message: "New favorite park added!" });
-        } catch(err){
-            if (err) res.status(400).json(err);
-        }
-    }
+        if (updatedParkData[0]) {
+            res.status(200).json({ message: 'Explorere/park relationship was updated!' });
+        } else {
+            res.status(500).json({ message: 'Something went wrong with the request' });
 
-    if (req.body.newFavPark) {
-       
-        try {
-            const newFavData = await Park.create(req.body.newFavPark);
-            
-            const parkId = newFavData.id;
+        };
+        
+    } catch (err) {
+        res.status(400).json({ message: 'Something went wrong with the request' });
+    };
+}
 
-                const explorerPark = {
-                is_favorite: true,
-                explorer_id: req.session.userId,
-                park_id: parkId
-            };
-            await ExplorerPark.create(explorerPark);
-
-            res.status(201).json({ message: "New favorite park added!" });
-        } catch(err){
-            if (err) res.status(400).json(err);
-        }
-    }
-
-    
-    if (req.body.visitedPark) {
-       
-        try {
-            const visitedData = await Park.create(req.body.visitedPark);
-            
-            const parkId = visitedData.id;
-
-                const explorerPark = {
-                has_visited: true,
-                explorer_id: req.session.userId,
-                park_id: parkId
-            };
-            await ExplorerPark.create(explorerPark);
-
-            res.status(201).json({ message: "New park added to your been-there list!" });
-        } catch(err){
-            if (err) res.status(400).json(err);
-        }
-    }
-
-    
-    if (req.body.newParkToVisit) {
-       
-        try {
-            const newToVisitData = await Park.create(req.body.newParkToVisit);
-            
-            const parkId = newToVisitData.id;
-
-                const explorerPark = {
-                explorer_id: req.session.userId,
-                park_id: parkId
-            };
-            await ExplorerPark.create(explorerPark);
-
-            res.status(201).json({ message: "New park added to your bucket list!" });
-        } catch(err){
-            if (err) res.status(400).json(err);
-        }
-    }
 });
 
 //Render the page in which you can find a registered user's favorite parks
@@ -256,18 +427,28 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
         });
         const explorer = explorerData.get({ plain: true });
         let favoriteParks;
+        let length;
         if (explorer.your_parks.length) {
             favoriteParks = explorer.your_parks.filter((park) => park.explorer_park.is_favorite);
+            if(favoriteParks.length){
+                length= true;
+            } else {
+                favoriteParks = true;
+                length=false
+            }
         } else {
-            favoriteParks = [];
-        }
+            favoriteParks = true;
+            length= false;
+        };
         let ownParks = req.params.id == req.session.userId;
         res.render('view-parks', {
             ...explorer,
             favoriteParks,
+            length,
             loggedIn: req.session.loggedIn,
             ownParks,
-            background: imageData[1].file_path,
+            transparent,
+            background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {
@@ -284,18 +465,28 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
         });
         const explorer = explorerData.get({ plain: true });
         let visitedParks;
+        let length;
         if (explorer.your_parks.length) {
             visitedParks = explorer.your_parks.filter((park) => park.explorer_park.has_visited);
+            if(visitedParks.length){
+                length = true;
+            } else {
+                visitedParks = true;
+                length = false;
+            }
         } else {
-            visitedParks = [];
-        }
+            visitedParks = true;;
+            length = false;
+        };
         let ownParks = req.params.id == req.session.userId;
         res.render('view-parks', {
             ...explorer,
             visitedParks,
+            length,
             loggedIn: req.session.loggedIn,
             ownParks,
-            background: imageData[1].file_path,
+            transparent,
+            background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {
@@ -312,18 +503,28 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
         });
         const explorer = explorerData.get({ plain: true });
         let planToVisitParks;
+        let length;
         if (explorer.your_parks.length) {
-            planToVisitParks = explorer.your_parks.filter((park) => (park.explorer_park.is_favorite === false && park.explorer_park.has_visited === false));
+            planToVisitParks = explorer.your_parks.filter((park) => park.explorer_park.wants_to_visit);
+            if(planToVisitParks.length){
+            length= true;
+            } else {
+                planToVisitParks= true;
+                length= false;
+            };
         } else {
-            planToVisitParks = [];
-        }
+            planToVisitParks = true;
+            length= false;
+        };
         let ownParks = req.session.userId == req.params.id;
         res.render('view-parks', {
             ...explorer,
             planToVisitParks,
+            length,
             loggedIn: req.session.loggedIn,
             ownParks,
-            background: imageData[1].file_path,
+            transparent,
+            background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {

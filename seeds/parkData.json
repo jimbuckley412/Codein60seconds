@@ -1,25 +1,65 @@
 [
-    {
-      "full_name":  "Abraham Lincoln Birthplace National Historical Park",
-      "designation": "National Historical Park",
-      "directions_url": "http://www.nps.gov/abli/planyourvisit/directions.htm",
-      "image_url": "https://www.nps.gov/common/uploads/structured_data/3C861078-1DD8-B71B-0B774A242EF6A706.jpg",
-      "image_altText":  "The Memorial Building surrounded by fall colors"
-      
-    },
-    {
-      "full_name": "Acadia National Park",
-      "designation": "National Park",
-      "directions_url": "http://www.nps.gov/adam/planyourvisit/directions.htm",
-      "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7B45AE-1DD8-B71B-0B7EE131C7DFC2F5.jpg",
-      "image_altText": "Large puffy clouds dot a brilliant blue sky as wave crash against the rocky coastline of Acadia."
-    },
-    {
-      "full_name": "Adams National Historical Park",
-      "designation": "National Historical Park",
-      "directions_url":"http://www.nps.gov/afam/planyourvisit/directions.htm",
-      "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7C7416-1DD8-B71B-0B1B30D0827F7C74.jpg",
-      "image_altText":"The Birthplaces of Presidents John Adams (right) and John Quincy Adams (left)" 
-    }
-
-  ]
+  {
+    "full_name": "Sandy Hook National Recreation Area",
+    "designation": "National Recreation Area",
+    "directions_url": "http://www.nps.gov/gate/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7B45AE-1DD8-B71B-0B7EE131C7DFC2F5.jpg",
+    "image_altText": "A view of the Sandy Hook National Recreation Area"
+  },
+  {
+    "full_name": "Acadia National Park",
+    "designation": "National Park",
+    "directions_url": "http://www.nps.gov/adam/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7B45AE-1DD8-B71B-0B7EE131C7DFC2F5.jpg",
+    "image_altText": "Large puffy clouds dot a brilliant blue sky as wave crash against the rocky coastline of Acadia."
+  },
+  {
+    "full_name": "Death Valley National Park",
+    "designation": "National Park",
+    "directions_url": "http://www.nps.gov/deva/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7EABCA-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the Death Valley National Park"
+  },
+  {
+    "full_name": "Everglades National Park",
+    "designation": "National Park",
+    "directions_url": "http://www.nps.gov/ever/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7F2F36-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the Everglades National Park"
+  },
+  {
+    "full_name": "El Malpais National Monument",
+    "designation": "National Battlefield",
+    "directions_url": "http://www.nps.gov/elma/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7EEEFA-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the El Malpais National Monument"
+  },
+  {
+    "full_name": "Cuyahoga Valley National Park",
+    "designation": "National Park",
+    "directions_url": "http://www.nps.gov/cuva/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7E8BA8-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the Cuyahoga Valley National Park"
+  },
+  {
+    "full_name": "Crater Lake National Park",
+    "designation": "National Park",
+    "directions_url": "http://www.nps.gov/crla/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7E2B4F-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the Crater Lake National Park"
+  },
+  {
+    "full_name": "Channel Islands National Park",
+    "designation": "National Seashore",
+    "directions_url": "http://www.nps.gov/chis/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7DEB14-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the Channel Islands National Park"
+  },
+  {
+    "full_name": "Cabrillo National Monument",
+    "designation": "National Monument",
+    "directions_url": "http://www.nps.gov/cabr/planyourvisit/directions.htm",
+    "image_url": "https://www.nps.gov/common/uploads/structured_data/3C7D6B9C-1DD8-B71B-0B5F3F4F2F3F2F0A.jpg",
+    "image_altText": "A view of the Cabrillo National Monument"
+  }
+]

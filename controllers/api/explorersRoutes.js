@@ -16,8 +16,11 @@ router.get('/posts', async (req, res) => {
                 { model: Comment }
             ],
         });
-        const posts = postData.map((post) =>post.get({ plain: true }));
-              posts.forEach((post) => post.isOwnPost = post.explorer_id === req.session.userId);
+        const posts = postData.map((post) => post.get({ plain: true }));
+        posts.forEach((post) => {
+            post.isOwnPost = post.explorer_id === req.session.userId;
+            post.author = post.explorer.username;
+        });
         res.render('all-posts', {
             posts,
             loggedIn: req.session.loggedIn,
@@ -49,9 +52,13 @@ router.get('/posts/:id', async (req, res) => {
             comment.post_title = post.title;
             comment.post_author = author_name;
         }
-        res.render('comments-for-one-post', {...post, 
-            author_name, 
-            loggedIn: req.session.loggedIn, 
+        const { username } = await Explorer.findByPk(req.session.userId);
+        console.log(username);
+        res.render('comments-for-one-post', {
+            ...post,
+            author_name,
+            username,
+            loggedIn: req.session.loggedIn,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
         });
@@ -59,38 +66,42 @@ router.get('/posts/:id', async (req, res) => {
         res.status(500).json(err); 1
     }
 });
- 
+
 //Render the view to add a comment to a given post
 router.get('/posts/:id/comment', withAuth, async (req, res) => {
     try {
-      const postData = await Post.findByPk(req.params.id);
-      const post = postData.get({ plain: true });
-      const authorData = await Explorer.findByPk(post.explorer_id);
-      const author_name = authorData.username;
-  
-      res.render('add-comment', { ...post, 
-        author_name, 
-        loggedIn: req.session.loggedIn,  
-        background: imageData[Math.floor(Math.random() * 4)].file_path,
-        stylesheet: '/css/style.css'});
+        const postData = await Post.findByPk(req.params.id);
+        const post = postData.get({ plain: true });
+        const authorData = await Explorer.findByPk(post.explorer_id);
+        const author_name = authorData.username;
+        const { username } = await Explorer.findByPk(req.session.userId);
+
+        res.render('add-comment', {
+            ...post,
+            author_name,
+            username,
+            loggedIn: req.session.loggedIn,
+            background: imageData[Math.floor(Math.random() * 4)].file_path,
+            stylesheet: '/css/style.css'
+        });
     } catch (err) {
-      res.status(500).json(err);
+        res.status(500).json(err);
     }
-  });
-  //Add a comment to a particular post.
-  router.post('/posts/:id/comment', withAuth, async (req, res) => {
+});
+//Add a comment to a particular post.
+router.post('/posts/:id/comment', withAuth, async (req, res) => {
     try {
-  
-      const newComment = await Comment.create({
-        ...req.body,
-        explorer_id: req.session.userId
-      });
-      res.status(201).json(newComment);
-  
+
+        const newComment = await Comment.create({
+            ...req.body,
+            explorer_id: req.session.userId
+        });
+        res.status(201).json(newComment);
+
     } catch (err) {
-      res.status(400).json(err);
+        res.status(400).json(err);
     }
-  });
+});
 
 //Get all other explorers to search for their posts and comments
 router.get('/search', withAuth, async (req, res) => {

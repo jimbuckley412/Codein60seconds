@@ -28,6 +28,11 @@ ExplorerPark.init(
         allowNull: false,
         defaultValue: false
     },
+    wants_to_visit: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+  },
     explorer_id: {
       type: DataTypes.INTEGER,
       references: {

@@ -21,7 +21,7 @@ router.get('/', withAuth, async (req, res) => {
         res.render('dashboard', {
             ...explorer,
             loggedIn: req.session.loggedIn,
-            background: imageData[1].file_path,
+            background: imageData[Math.floor(Math.random()*4)].file_path,
             stylesheet: "/css/style.css"
         });
     } catch (err) {
@@ -68,7 +68,9 @@ router.get('/post', withAuth, async (req, res) => {
     try {
       const postData = await Post.findByPk(req.params.id);
       const post = postData.get({ plain: true });
+      const username = await Explorer.findByPk(req.session.userId);
       res.render('edit', { ...post, 
+        username,
         loggedIn: req.session.loggedIn,
         background: imageData[Math.floor(Math.random() * 4)].file_path,
         stylesheet: '/css/style.css'});
