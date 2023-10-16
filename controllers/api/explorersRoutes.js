@@ -24,6 +24,7 @@ router.get('/posts', async (req, res) => {
         res.render('all-posts', {
             posts,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
             background: imageData[0].file_path,
             stylesheet: "/css/style.css"
         });
@@ -59,6 +60,7 @@ router.get('/posts/:id', async (req, res) => {
             author_name,
             username,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
         });
@@ -81,6 +83,7 @@ router.get('/posts/:id/comment', withAuth, async (req, res) => {
             author_name,
             username,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
         });
@@ -118,12 +121,14 @@ router.get('/search', withAuth, async (req, res) => {
         });
         const allExplorers = allExplorersData.map((explorer) => explorer.get({ plain: true }));
         const { username } = await Explorer.findByPk(req.session.userId);
-        //const { username } = userNameData.get({ plain: true });
+        const length = allExplorers.length;
 
         res.render('all-explorers', {
             allExplorers,
             username,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
+            length,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
         }
@@ -156,6 +161,7 @@ router.get('/search/:id/posts', withAuth, async (req, res) => {
             username,
             allPosts,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
         });
@@ -196,6 +202,7 @@ router.get('/search/:id/comments', withAuth, async (req, res) => {
         res.render('all-comments-by-an-explorer', {
             comments, username, explorer,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
             background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
         });

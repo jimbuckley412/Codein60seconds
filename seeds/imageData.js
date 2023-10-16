@@ -12,7 +12,8 @@ const imageData = [
     file_path: '/images/img4.jpg',
   },
   {
-    name: 'Camping',
+    name: `Camping...
+    And Much More!`,
     file_path: '/images/img5.jpg',
   },
 

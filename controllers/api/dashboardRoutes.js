@@ -21,6 +21,7 @@ router.get('/', withAuth, async (req, res) => {
         res.render('dashboard', {
             ...explorer,
             loggedIn: req.session.loggedIn,
+            user_id: req.session.userId,
             background: imageData[Math.floor(Math.random()*4)].file_path,
             stylesheet: "/css/style.css"
         });
@@ -28,6 +29,47 @@ router.get('/', withAuth, async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+router.put('/', withAuth, async (req, res) => {
+  try {
+      await Explorer.update({
+        email: req.body.email
+      }, {
+        where:{
+          id: req.session.userId
+        }
+      });
+      if(!req.body.email){
+      res.status(200).json({message:"User was successfully unsubscribed from mailing list!"});
+      } else {
+        res.status(200).json({message:'Successfully added to the mailing list!'});
+      };
+  } catch (err) {
+      res.status(400).json(err);
+  }
+});
+
+router.delete('/', withAuth, async (req, res) => {
+
+  try{
+    await Explorer.destroy({
+      where:{
+        id: req.session.userId
+      } 
+      });
+    req.session.destroy((err) => {
+      if (err) {
+          res.status(400).send('Unable to logout.');
+      } else {
+        res.status(200).json({message: 'You are no longer in our crade.'});
+      }
+  });
+
+  } catch(err) {
+    res.status(500).json(err);
+  }
+})
+
 //Render the view to add a new post.
 router.get('/post', withAuth, async (req, res) => {
     try {
@@ -38,6 +80,7 @@ router.get('/post', withAuth, async (req, res) => {
   
       res.render('add-post', { username, 
         loggedIn: req.session.loggedIn,
+        user_id: req.session.userId,
         background: imageData[Math.floor(Math.random() * 4)].file_path,
             stylesheet: '/css/style.css'
     });
@@ -72,6 +115,7 @@ router.get('/post', withAuth, async (req, res) => {
       res.render('edit', { ...post, 
         username,
         loggedIn: req.session.loggedIn,
+        user_id: req.session.userId,
         background: imageData[Math.floor(Math.random() * 4)].file_path,
         stylesheet: '/css/style.css'});
   
@@ -136,6 +180,7 @@ router.get('/comments', withAuth, async (req, res) => {
       res.render('comments-by-current-explorer', { comments, 
         username, 
         loggedIn: req.session.loggedIn,
+        user_id: req.session.userId,
         background: imageData[Math.floor(Math.random() * 4)].file_path,
         stylesheet: '/css/style.css'});
     } catch (err) {
@@ -152,6 +197,7 @@ router.get('/comments', withAuth, async (req, res) => {
       
       return res.render('edit', { ...comment, 
         loggedIn: req.session.loggedIn,
+        user_id: req.session.userId,
         background: imageData[Math.floor(Math.random() * 4)].file_path,
         stylesheet: '/css/style.css'});
 

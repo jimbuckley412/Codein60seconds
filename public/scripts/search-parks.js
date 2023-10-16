@@ -77,11 +77,11 @@ const deleteCard = async (event) => {
     const nameEl = body.children.item(0);
     const full_name = nameEl.textContent.trim();
 
-    if (card.dataset.favorite === 'true') {
+    if (location.pathname.endsWith('favorites')) {
 
       const response = await fetch('/api/parks', {
         method: 'PUT',
-        body: JSON.stringify({ full_name, is_favorite: false, has_visited: true }),
+        body: JSON.stringify({ full_name, is_favorite: false}),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -93,7 +93,7 @@ const deleteCard = async (event) => {
       } else {
         alert(response.statusText);
       };
-    } else if (card.dataset.visited === 'true') {
+    } else if (location.pathname.endsWith('visited')){
       const response = await fetch('/api/parks', {
         method: 'PUT',
         body: JSON.stringify({ full_name, is_favorite: false, has_visited: false }),
