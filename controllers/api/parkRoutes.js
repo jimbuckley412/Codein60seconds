@@ -432,6 +432,9 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
             favoriteParks = explorer.your_parks.filter((park) => park.explorer_park.is_favorite);
             if(favoriteParks.length){
                 length= true;
+                favoriteParks.forEach((park) =>{
+                    park.ownParks = (req.session.userId == req.params.id)
+                });
             } else {
                 favoriteParks = true;
                 length=false
@@ -440,9 +443,6 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
             favoriteParks = true;
             length= false;
         };
-        favoriteParks.forEach((park) =>{
-
-        park.ownParks = (req.session.userId == req.params.id)});
 
         const fellow = explorer.username;
 
@@ -481,6 +481,10 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
             visitedParks = explorer.your_parks.filter((park) => park.explorer_park.has_visited);
             if(visitedParks.length){
                 length = true;
+                visitedParks.forEach((park) => {
+                    park.ownParks = (req.session.userId == req.params.id)
+                });
+        
             } else {
                 visitedParks = true;
                 length = false;
@@ -489,10 +493,6 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
             visitedParks = true;;
             length = false;
         };
-
-        visitedParks.forEach((park) => {
-            park.ownParks = (req.session.userId == req.params.id)
-        });
 
         const fellow = explorer.username;
         const currentExplorerData = await Explorer.findByPk(req.session.userId);
@@ -529,6 +529,10 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
             planToVisitParks = explorer.your_parks.filter((park) => park.explorer_park.wants_to_visit);
             if(planToVisitParks.length){
             length= true;
+            planToVisitParks.forEach((park) => {
+                park.ownParks = (req.session.userId == req.params.id)
+            });
+    
             } else {
                 planToVisitParks= true;
                 length= false;
@@ -538,9 +542,6 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
             length= false;
         };
 
-        planToVisitParks.forEach((park) => {
-            park.ownParks = (req.session.userId == req.params.id)
-        });
 
         const fellow = explorer.username;
         const currentExplorerData = await Explorer.findByPk(req.session.userId);
