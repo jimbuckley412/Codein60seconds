@@ -41,7 +41,7 @@ router.get('/', withAuth, async (req, res) => {
         thingsToDo,
         loggedIn: req.session.loggedIn,
         username,
-        user_id: req.session.userId,
+        id: req.session.userId,
         transparent,
         background: mainImage[0].file_path, stylesheet: "/css/style.css"
     });
@@ -446,7 +446,6 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
             favoriteParks,
             length,
             loggedIn: req.session.loggedIn,
-            user_id: req.session.userId,
             ownParks,
             transparent,
             background: imageData[0].file_path,
@@ -485,7 +484,6 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
             visitedParks,
             length,
             loggedIn: req.session.loggedIn,
-            user_id: req.session.userId,
             ownParks,
             transparent,
             background: imageData[0].file_path,
@@ -524,7 +522,6 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
             planToVisitParks,
             length,
             loggedIn: req.session.loggedIn,
-            user_id: req.session.userId,
             ownParks,
             transparent,
             background: imageData[0].file_path,
