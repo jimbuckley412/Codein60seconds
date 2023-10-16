@@ -78,50 +78,103 @@
   transform-origin: left;
 }
 
+#motto {
+  text-align: center;
+  color: black;
+}
 
 
 /* CSS of main body */
 body {
-  color: #FFFFFF;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
+  background-color: #328f8a;
+  background-image: linear-gradient(45deg,#328f8a,#08ac4b);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.body {
+header .header-content {
+  background-color: #fff;
+  height: 45px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  min-height: 100vh;
-
+  padding: 0 20px;
 }
 
-#motto {
-  text-align: center;
-  color: white;
+.header-content .logo h1 {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
 }
+
+.tabs ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.tabs ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .container {
-  padding-top: 0px;
-  padding-left: 500px;
-  padding-right: 500px;
+  position: relative;
+  z-index: 1;
+  max-width: 360px;
+  margin: 50px auto;
+  padding: 45px;
+  background: #FFFFFF;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  text-align: center;
 }
 
 .container h1 {
-  font-size: 50px;
-  text-align: center;
-  color: white;
-}
-.login-form {
-  margin: auto;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-  }
+.container .form-control {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
 
-  .tabs ul {
-    margin-top: 10px;
-  }
+.container .btn {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: #328f8a;
+  background-image: linear-gradient(45deg,#328f8a,#08ac4b);
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.form-check-label {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.form-check-input {
+  margin-right: 5px;
+}
+ 
+.custom-align-left label {
+  text-align: left;
+  display: block;
+}
+.container-fluid {
+  width: 500px;
 }
