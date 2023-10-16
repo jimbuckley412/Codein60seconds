@@ -73,11 +73,11 @@ Disclaimer: Screenshots present the website as rendered on the Google Chrome Ver
 
 10.When you click the login option at the top right of the nav bar, this is what appears:
 
-![Alt text](public/images/screenshots/aBetterTrailBlazer11.png)
+![Alt text](public/images/screenshots/login.page.png)
 
 11.If instead you choose the last link (from left to right), the signup view will show up:
 
-![Alt text](public/images/screenshots/aBetterTrailBlazer-signup.png)
+![Alt text](public/images/screenshots/TrailBlazer-Sign-up.png)
 
 12.Successfull submitting either form will take you to your dashboard:
 ![Alt text](public/images/screenshots/aBetterTrailBlazer12.png)
