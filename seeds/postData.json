@@ -1,41 +1,17 @@
 [
-  {
-    "title": "OMG Stunning",
-    "content": "I cant believe what I just saw.",
-    "explorer_id": 1
-  },
-  {
-    "title": "Use 'the trails'",
-    "content": "Stay on the beaten path!",
-  },
-  {
-    "title": "Setting the 'mood" properly.",
-    "content": "By doing it we can stipulate how much the session will last.",
-    "explorer_id": 3
-  },
-  {
-    "title": "Gorgeous Views",
-    "content": "Breathtaking views of the ocean, mountains, and city.",
-    "explorer_id": 1
-  },
-  {
-    "title": "WOWOWOWOW",
-    "content": "So much wow.",
-    "explorer_id": 2
-  },
-  {
-    "title": "So much fun!",
-    "content": "So much fun!",
-    "explorer_id": 3
-  },
-  {
-    "title": "Breath taking",
-    "content": "Breath taking",
-    "explorer_id": 1
-  },
-  {
-    "title":"I am going back tomorrow!",
-    "content":"so much more to explore!",
-    "explorer_id": 2
-  }
-]
+    {
+      "title": "Death Valley National Park",
+      "content": "In this below-sea-level basin, steady drought and record summer heat make Death Valley a land of extremes. Yet, each extreme has a striking contrast. Towering peaks are frosted with winter snow. Rare rainstorms bring vast fields of wildflowers. Lush oases harbor tiny fish and refuge for wildlife and humans. Despite its morbid name, a great diversity of life thrives in Death Valley.",
+      "explorer_id": 1
+    },
+    {
+      "title": "Cabrillo National Monument",
+      "content": "Climbing out of his boat and onto shore in 1542, Juan Rodriguez Cabrillo stepped into history as the first European to set foot on what is now the West Coast of the United States. In addition to telling the story of 16th century exploration, the park is home to a wealth of cultural and natural resources. Join us and embark on your own Voyage of Exploration.",
+      "explorer_id": 2
+    },
+    {
+      "title": "California National Historic Trail",
+      "content": "Follow in the footsteps of over 250,000 emigrants who traveled to the gold fields and rich farmlands of California during the 1840s and 1850s: the greatest mass migration in American history. The California National Historic Trail is over 5,000 miles long and covers portions of 10 states. Step into history along more than 1,000 miles of ruts and traces from travelers and their overland wagons.",
+      "explorer_id": 3
+    }
+  ]

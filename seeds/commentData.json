@@ -1,52 +1,47 @@
 [
   {
-    "content": "What you are saying sounds about right, but I am not sure. I will fact-check later.",
+    "content": "Breath-taking views of the ocean, mountains, and city.",
+    "explorer_id": 1,
+    "post_id": 2
+  },
+  {
+    "content": "WOWOWOWOW So much wow.",
+    "explorer_id": 2,
+    "post_id": 3
+  },
+  {
+    "content": "Had plenty of fun with my kids.",
+    "explorer_id": 3,
+    "post_id": 1
+  },
+  {
+    "content": "Breath-taking",
     "explorer_id": 1,
     "post_id": 3
   },
   {
-    "content": "In my last project for the bootcamp I added a function called withAuth in the 'utils' folder just for that purpose.",
+    "content": "I am going back tomorrow!",
     "explorer_id": 2,
     "post_id": 1
   },
   {
-    "content": "And... you can do all that (plus plenty more) without knowing any cryptography!",
+    "content": "So much more to explore!",
     "explorer_id": 3,
     "post_id": 2
   },
   {
-    "content": "Awesome View Beautiful skyline",
-    "explorer_id": 4,
-    "post_id": 4
+    "content": "Reply to Sal from Amiko: My family also loves the place.",
+    "explorer_id": 1,
+    "post_id": 1
   },
   {
-    "content": "Amazing trails and views",
-    "explorer_id": 5,
-    "post_id": 5
+    "content": "Reply to Sal from Lernantino: I was also taken aghast by the wildlife and the views.",
+    "explorer_id": 2,
+    "post_id": 2
   },
   {
-    "content": "I love this place",
-    "explorer_id": 6,
-    "post_id": 6
-  }
-  {
-    "content": "Gorgous views well maintained trails",
-    "explorer_id": 7,
-    "post_id": 7
-  }
-  {
-    "content": "I will hike here once a month beautiful serene",
-    "explorer_id": 8,
-    "post_id": 8
-  }
-  {
-    "content": "I am coming back tomorrow so many trails to explore",
-    "explorer_id": 9,
-    "post_id": 9
-  }
-  {
-    "content": "I will never go back AWEFUL TRAILS DON'T GO",
-    "explorer_id": 10,
-    "post_id": 10
+    "content": "Reply to Lernantino from Amiko: Leaves one speechless, right?",
+    "explorer_id": 3,
+    "post_id": 3
   }
 ]
