@@ -2,7 +2,7 @@ const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const mainImage = require('../../seeds/mainImage');
 const imageData = require('../../seeds/imageData');
-const { Explorer, Post, Comment, ExplorerPark, Park } = require('../../models');
+const { Explorer, ExplorerPark, Park } = require('../../models');
 
 const { apiKey, npsEndpoint, npsThingsToDoEndpoint, npsActivitiesEndpoint, npsTopicsEndpoint } = require('../../public/nps-api-info/npsData');
 
@@ -47,7 +47,7 @@ router.get('/', withAuth, async (req, res) => {
     });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
 
     if (req.body.stateCode) {
 
@@ -432,6 +432,9 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
             favoriteParks = explorer.your_parks.filter((park) => park.explorer_park.is_favorite);
             if(favoriteParks.length){
                 length= true;
+                favoriteParks.forEach((park) =>{
+                    park.ownParks = (req.session.userId == req.params.id)
+                });
             } else {
                 favoriteParks = true;
                 length=false
@@ -440,13 +443,21 @@ router.get('/explorers/:id/favorites', withAuth, async (req, res) => {
             favoriteParks = true;
             length= false;
         };
-        let ownParks = req.params.id == req.session.userId;
+
+        const fellow = explorer.username;
+
+        const currentExplorerData = await Explorer.findByPk(req.session.userId);
+        const { username } = currentExplorerData;
+
+        explorer.username = username;
+
         res.render('view-parks', {
             ...explorer,
+            fellow,
             favoriteParks,
             length,
             loggedIn: req.session.loggedIn,
-            ownParks,
+            user_id: req.session.userId,
             transparent,
             background: imageData[0].file_path,
             stylesheet: "/css/style.css"
@@ -470,6 +481,10 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
             visitedParks = explorer.your_parks.filter((park) => park.explorer_park.has_visited);
             if(visitedParks.length){
                 length = true;
+                visitedParks.forEach((park) => {
+                    park.ownParks = (req.session.userId == req.params.id)
+                });
+        
             } else {
                 visitedParks = true;
                 length = false;
@@ -478,13 +493,19 @@ router.get('/explorers/:id/visited', withAuth, async (req, res) => {
             visitedParks = true;;
             length = false;
         };
-        let ownParks = req.params.id == req.session.userId;
+
+        const fellow = explorer.username;
+        const currentExplorerData = await Explorer.findByPk(req.session.userId);
+        const { username } = currentExplorerData;
+        explorer.username = username;
+
         res.render('view-parks', {
             ...explorer,
+            fellow,
             visitedParks,
             length,
             loggedIn: req.session.loggedIn,
-            ownParks,
+            user_id: req.session.userId,
             transparent,
             background: imageData[0].file_path,
             stylesheet: "/css/style.css"
@@ -508,6 +529,10 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
             planToVisitParks = explorer.your_parks.filter((park) => park.explorer_park.wants_to_visit);
             if(planToVisitParks.length){
             length= true;
+            planToVisitParks.forEach((park) => {
+                park.ownParks = (req.session.userId == req.params.id)
+            });
+    
             } else {
                 planToVisitParks= true;
                 length= false;
@@ -516,13 +541,19 @@ router.get('/explorers/:id/to_visit', withAuth, async (req, res) => {
             planToVisitParks = true;
             length= false;
         };
-        let ownParks = req.session.userId == req.params.id;
+
+
+        const fellow = explorer.username;
+        const currentExplorerData = await Explorer.findByPk(req.session.userId);
+        const { username } = currentExplorerData;
+        explorer.username = username;
+
         res.render('view-parks', {
             ...explorer,
+            fellow,
             planToVisitParks,
             length,
             loggedIn: req.session.loggedIn,
-            ownParks,
             transparent,
             background: imageData[0].file_path,
             stylesheet: "/css/style.css"
